@@ -1,0 +1,86 @@
+:root{
+  --paper:#e2d3ac;      /* yellowed paper */
+  --label:#d3bf90;      /* catalogue tab */
+  --ink:#2a2018;        /* sepia black */
+  --faded:#6f5d45;      /* pencil */
+  --navy:#1f3a5f;       /* fountain-pen blue */
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{
+  margin:0; color:var(--ink); background:var(--paper);
+  font:20px/1.65 "IM Fell English", Georgia, "Times New Roman", serif;
+  -webkit-font-smoothing:antialiased;
+}
+/* paper grain + darkened edges, laid over everything */
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:10;
+  background:
+    radial-gradient(ellipse at center, transparent 55%, rgba(84,52,14,.28) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .08 .5 0 0 0 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main{max-width:680px; margin:0 auto; padding:2.5rem 1.4rem 4rem}
+
+/* ---------- header ---------- */
+header{
+  display:flex; align-items:center; gap:1.6rem;
+  padding-bottom:1.6rem; border-bottom:4px double var(--ink);
+}
+.stamp{
+  position:relative; flex:none; width:124px; padding:9px;
+  background:#f3e9cf; transform:rotate(-2.5deg);
+  box-shadow:1px 2px 0 rgba(42,32,24,.35);
+}
+/* perforated stamp edge */
+.stamp::before{
+  content:""; position:absolute; inset:-5px; pointer-events:none;
+  background:
+    radial-gradient(circle 4px at 50% 0,var(--paper) 96%,#0000) top/12px 6px repeat-x,
+    radial-gradient(circle 4px at 50% 100%,var(--paper) 96%,#0000) bottom/12px 6px repeat-x,
+    radial-gradient(circle 4px at 0 50%,var(--paper) 96%,#0000) left/6px 12px repeat-y,
+    radial-gradient(circle 4px at 100% 50%,var(--paper) 96%,#0000) right/6px 12px repeat-y;
+}
+.stamp img{
+  display:block; width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; object-position:50% 20%;
+  filter:sepia(.7) contrast(1.05) brightness(.95);
+  border:1px solid var(--ink);
+}
+.postmark{
+  position:absolute; right:-30px; bottom:-26px; width:84px; height:84px;
+  color:var(--navy); opacity:.62; mix-blend-mode:multiply; transform:rotate(-14deg);
+}
+h1{
+  margin:0; font-weight:400; font-size:3.6rem; line-height:1; letter-spacing:.02em;
+}
+.tagline{margin:.55rem 0 0; font-style:italic; color:var(--faded); font-size:1.05rem}
+
+/* ---------- catalogue sections ---------- */
+section{margin-top:2.3rem}
+h2{
+  display:inline-block; margin:0 0 .7rem; padding:.05rem .9rem .1rem;
+  font:400 1.05rem/1.5 "Special Elite", "Courier New", monospace;
+  background:var(--label); border:1px solid var(--ink); border-radius:2px 14px 0 0;
+}
+ul{list-style:none; margin:0; padding:0}
+li{display:flex; align-items:baseline; gap:.6rem; padding:.12rem 0}
+a{color:var(--navy); text-decoration:none; border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--navy)}
+a:focus-visible{outline:2px solid var(--navy); outline-offset:3px}
+.dots{flex:1; min-width:1rem; border-bottom:2px dotted rgba(42,32,24,.45)}
+time{font:.85rem "Special Elite","Courier New",monospace; color:var(--faded); white-space:nowrap}
+.more{margin-top:.4rem; font-style:italic}
+
+footer{
+  margin-top:3.2rem; padding-top:1rem; border-top:1px solid var(--ink);
+  font:.85rem "Special Elite","Courier New",monospace; color:var(--faded);
+}
+
+@media (max-width:480px){
+  body{font-size:18px}
+  main{padding-top:1.8rem}
+  header{gap:1.3rem}
+  .stamp{width:92px; padding:7px}
+  .postmark{width:66px; height:66px; right:-24px; bottom:-20px}
+  h1{font-size:2.6rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
