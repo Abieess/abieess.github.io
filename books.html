@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Books by Class | Abies</title>
+<link rel="icon" href="assets/abies.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Noto+Serif+Tamil:wght@400;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#e2d3ac;--label:#d3bf90;--card:#ecdfbd;--ink:#2a2018;--faded:#6f5d45;--navy:#1f3a5f;--ochre:#a8741a;--green:#3f5d3a}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{margin:0;color:var(--ink);background:var(--paper);font:18px/1.6 "IM Fell English","Noto Serif Tamil",Georgia,serif}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:10;
+  background:radial-gradient(ellipse at center,transparent 55%,rgba(84,52,14,.28) 100%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .08 .5 0 0 0 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+main{padding:1.8rem 5vw 4rem}
+a{color:var(--navy);text-decoration:none;border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--navy)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.mono,button,input,th,.tab{font-family:"Special Elite","Courier New",monospace}
+
+header{padding-bottom:1.2rem;border-bottom:4px double var(--ink)}
+header h1{margin:.4rem 0 .2rem;font-weight:400;font-size:2.1rem;line-height:1.25}
+header p{margin:0;color:var(--faded);font-style:italic}
+.sum{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.2rem;margin-top:1rem}
+.sum b{font:400 1.05rem "Special Elite",monospace}
+
+.bar{display:inline-block;vertical-align:middle;width:180px;max-width:100%;height:12px;border:1px solid var(--ink);background:#f3e9cf}
+.bar i{display:block;height:100%;background:repeating-linear-gradient(45deg,var(--navy) 0 4px,#2c4d7a 4px 8px)}
+
+nav{display:flex;gap:.3rem;margin-top:1.4rem;overflow-x:auto;border-bottom:1px solid var(--ink);padding-bottom:0}
+.tab{flex:none;padding:.15rem .9rem;font-size:.95rem;background:var(--label);color:var(--ink);border:1px solid var(--ink);border-bottom:0;border-radius:2px 14px 0 0;cursor:pointer}
+.tab[aria-current=page]{background:#f3e9cf;font-weight:700}
+
+.utitle{margin:1.6rem 0 .3rem;font-weight:600;font-size:1.5rem;line-height:1.3}
+.info{margin:0;color:var(--faded);font-style:italic}
+.uprog{margin:.8rem 0 1rem}
+
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th{text-align:left;font-weight:400;font-size:.9rem;padding:.4rem .6rem;background:var(--label);border:1px solid var(--ink);white-space:nowrap}
+td{padding:.45rem .6rem;border-bottom:1px dotted rgba(42,32,24,.5);vertical-align:top}
+tfoot td{border-top:2px solid var(--ink);border-bottom:0;font-weight:600}
+td.n{text-align:right;font-family:"Special Elite",monospace}
+td small{display:block;color:var(--faded);font-size:.85rem}
+
+.st{font-size:.85rem;padding:.2rem .7rem;border:2px solid;border-radius:3px;background:transparent;cursor:pointer;white-space:nowrap;min-width:7.2rem}
+.st.ns{color:var(--faded);border-color:var(--faded);border-style:dashed}
+.st.ip{color:var(--ochre);border-color:var(--ochre)}
+.st.cp{color:var(--green);border-color:var(--green);border-style:double;border-width:4px;transform:rotate(-1.5deg)}
+.st.rv{color:var(--navy);border-color:var(--navy);border-style:double;border-width:4px;transform:rotate(1.5deg)}
+td input{width:100%;font-size:.85rem;padding:.2rem .3rem;color:var(--ink);background:#f3e9cf;border:1px solid var(--faded);border-radius:2px}
+td input[type=number]{width:5rem}
+td input[type=date]{min-width:9.5rem}
+td input[type=text]{min-width:11rem}
+
+.tools{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+.tools button{font-size:.85rem;padding:.25rem .8rem;color:var(--ink);background:var(--label);border:1px solid var(--ink);border-radius:2px;cursor:pointer}
+.how{margin-top:1.2rem;color:var(--faded);font-size:.95rem}
+
+@media(max-width:760px){
+  body{font-size:17px}
+  .bar{width:130px}
+  table.topics thead{display:none}
+  table.topics,table.topics tbody,table.topics tr,table.topics td{display:block;width:100%}
+  table.topics tr{margin:0 0 .9rem;padding:.5rem .7rem;background:var(--card);border:1px solid var(--ink)}
+  table.topics td{border:0;padding:.2rem 0}
+  table.topics td[data-l]::before{content:attr(data-l) ": ";font:.8rem "Special Elite",monospace;color:var(--faded)}
+  table.topics td.tp{font-weight:600}
+  td input,td input[type=number],td input[type=text],td input[type=date]{width:100%;min-width:0}
+}
+.filters{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin:1.2rem 0 .4rem}
+.filters label{font:.9rem "Special Elite",monospace;cursor:pointer;display:flex;align-items:center;gap:.35rem}
+input[type=checkbox]{accent-color:var(--navy);width:1.05rem;height:1.05rem;flex:none}
+#q{font:.9rem "Special Elite",monospace;color:var(--ink);background:#f3e9cf;border:1px solid var(--faded);border-radius:2px;padding:.25rem .5rem;min-width:12rem}
+.jump{display:flex;flex-wrap:wrap;gap:.4rem;margin:.6rem 0 0}
+.jump a{font:.85rem "Special Elite",monospace;padding:.05rem .6rem;border:1px solid var(--ink);background:var(--label);border-radius:2px}
+h2.cls{margin:2.2rem 0 .2rem;font-weight:600;font-size:1.6rem;border-bottom:2px solid var(--ink);padding-bottom:.15rem;display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+h2.cls span{font:.9rem "Special Elite",monospace;color:var(--faded);white-space:nowrap}
+h3.term{display:inline-block;margin:1rem 0 .4rem;padding:.05rem .9rem;font:400 .95rem "Special Elite",monospace;background:var(--label);border:1px solid var(--ink);border-radius:2px 14px 0 0}
+ul.res{list-style:none;margin:0;padding:0}
+ul.res li{display:block;padding:.4rem 0;border-bottom:1px dotted rgba(42,32,24,.45)}
+ul.res label{display:flex;gap:.7rem;align-items:flex-start;cursor:pointer}
+.body{flex:1;min-width:0}
+.t1{font-weight:600}
+.t2{color:var(--faded);font-style:italic;font-size:.92rem}
+.r{font-size:.95rem;margin-top:.1rem}
+.full{font-size:.82rem;color:var(--faded)}
+.tags{margin-top:.2rem;display:flex;flex-wrap:wrap;gap:.3rem}
+.chip{font:.72rem "Special Elite",monospace;padding:.02rem .45rem;border:1px solid var(--faded);border-radius:2px;color:var(--faded);white-space:nowrap}
+.chip.tamil{color:var(--green);border-color:var(--green)}
+.chip.gs-ta{color:var(--navy);border-color:var(--navy)}
+.chip.gs-en{color:var(--ochre);border-color:var(--ochre)}
+li.done .t1,li.done .r{text-decoration:line-through;color:var(--faded)}
+.empty{color:var(--faded);font-style:italic;margin-top:2rem}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <a href="index.html">Back home</a>
+    <h1>Books by Class and Term</h1>
+    <p>Every textbook reference from the Tamil Study Map and the GS "Where to Study" PDF, regrouped by class and term</p>
+    <div class="sum" id="sum"></div>
+  </header>
+
+  <div class="filters" id="filters">
+    <label><input type="checkbox" data-src="tamil" checked> Tamil subject</label>
+    <label><input type="checkbox" data-src="gs-ta" checked> GS: Tamil books</label>
+    <label><input type="checkbox" data-src="gs-en"> GS: English books</label>
+    <label><input type="checkbox" id="hideDone"> Hide done</label>
+    <input id="q" type="search" placeholder="Search a topic or book">
+  </div>
+  <div class="jump" id="jump"></div>
+  <div id="view"></div>
+  <div class="tools"><button id="reset">Clear all ticks</button></div>
+  <p class="how">Tick a book when you have finished it. Ticks are saved in this browser on this device. GS references were read from the PDF by OCR, so check the original PDF if a word looks wrong.</p>
+</main>
+
+<script src="books-data.js"></script>
+<script>
+const KEY="books-progress-v1", ORDER=["tamil","gs-ta","gs-en"];
+const LABEL={"tamil":"Tamil subject","gs-ta":"GS Tamil books","gs-en":"GS English books"};
+const TERM={1:"First term (பருவம் 1)",2:"Second term (பருவம் 2)",3:"Third term (பருவம் 3)",0:"Term not specified"};
+let saved={}, on=new Set(["tamil","gs-ta"]), hideDone=false, query="";
+try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+const bar=x=>`<span class="bar"><i style="width:${x*100}%"></i></span>`;
+
+function visible(){
+  const q=query.trim().toLowerCase();
+  return BOOKS.filter(e=>on.has(e.src)&&(!hideDone||!saved[e.id])&&(!q||(e.topic+" "+(e.topic2||"")+" "+e.res+" "+(e.unit||"")).toLowerCase().includes(q)));
+}
+function entry(e){
+  const d=!!saved[e.id];
+  return `<li class="${d?"done":""}"><label><input type="checkbox" data-id="${esc(e.id)}" ${d?"checked":""}>
+  <span class="body"><span class="t1">${esc(e.topic)}</span>${e.topic2?` <span class="t2">${esc(e.topic2)}</span>`:""}
+  <div class="r">${esc(e.res)}</div>${e.full?`<div class="full">Full reference: ${esc(e.full)}</div>`:""}
+  <div class="tags"><span class="chip ${e.src}">${LABEL[e.src]}</span>${e.unit?`<span class="chip">${esc(e.unit)}</span>`:""}${e.extra?`<span class="chip">${esc(e.extra)}</span>`:""}</div></span></label></li>`;
+}
+function sortGroup(a){return a.slice().sort((x,y)=>ORDER.indexOf(x.src)-ORDER.indexOf(y.src));}
+function draw(){
+  const list=visible(), all=BOOKS.filter(e=>on.has(e.src)), doneAll=all.filter(e=>saved[e.id]).length;
+  $("sum").innerHTML=`<b class="mono">${doneAll} of ${all.length} references done</b>${bar(all.length?doneAll/all.length:0)}`;
+  let html="",jump="";
+  for(const c of [6,7,8,9,10,11,12,0]){
+    const inC=list.filter(e=>e.cls===c); if(!inC.length)continue;
+    const tot=BOOKS.filter(e=>e.cls===c&&on.has(e.src)), dn=tot.filter(e=>saved[e.id]).length;
+    const name=c?`Class ${c} (${c}-ம் வகுப்பு)`:"General notes (no class given)";
+    html+=`<h2 class="cls" id="c${c}">${name}<span>${dn} of ${tot.length} done</span></h2>`;
+    jump+=c?`<a href="#c${c}">Class ${c}</a>`:`<a href="#c0">Notes</a>`;
+    const terms=[1,2,3,0].filter(t=>inC.some(e=>e.term===t)), showTerm=inC.some(e=>e.term!==0);
+    for(const t of terms){
+      if(showTerm)html+=`<h3 class="term">${TERM[t]}</h3>`;
+      html+=`<ul class="res">${sortGroup(inC.filter(e=>e.term===t)).map(entry).join("")}</ul>`;
+    }
+  }
+  $("view").innerHTML=html||'<p class="empty">Nothing to show with these filters.</p>';
+  $("jump").innerHTML=jump;
+}
+$("filters").addEventListener("change",e=>{
+  const t=e.target;
+  if(t.dataset.src){t.checked?on.add(t.dataset.src):on.delete(t.dataset.src);draw();}
+  else if(t.id==="hideDone"){hideDone=t.checked;draw();}
+});
+$("q").addEventListener("input",e=>{query=e.target.value;draw();});
+$("view").addEventListener("change",e=>{
+  const id=e.target.dataset.id; if(!id)return;
+  e.target.checked?saved[id]=1:delete saved[id]; persist();
+  if(hideDone){draw();return;}
+  e.target.closest("li").classList.toggle("done",e.target.checked);
+  const y=window.scrollY; draw(); window.scrollTo(0,y);
+});
+$("reset").addEventListener("click",()=>{if(confirm("Clear all ticks on this device?")){saved={};persist();draw();}});
+draw();
+</script>
+</body>
+</html>

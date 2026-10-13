@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GS Where to Study | Abies</title>
+<link rel="icon" href="assets/abies.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Noto+Serif+Tamil:wght@400;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#e2d3ac;--label:#d3bf90;--card:#ecdfbd;--ink:#2a2018;--faded:#6f5d45;--navy:#1f3a5f;--ochre:#a8741a;--green:#3f5d3a}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{margin:0;color:var(--ink);background:var(--paper);font:18px/1.6 "IM Fell English","Noto Serif Tamil",Georgia,serif}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:10;
+  background:radial-gradient(ellipse at center,transparent 55%,rgba(84,52,14,.28) 100%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .08 .5 0 0 0 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+main{padding:1.8rem 5vw 4rem}
+a{color:var(--navy);text-decoration:none;border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--navy)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.mono,button,input,th,.tab{font-family:"Special Elite","Courier New",monospace}
+
+header{padding-bottom:1.2rem;border-bottom:4px double var(--ink)}
+header h1{margin:.4rem 0 .2rem;font-weight:400;font-size:2.1rem;line-height:1.25}
+header p{margin:0;color:var(--faded);font-style:italic}
+.sum{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.2rem;margin-top:1rem}
+.sum b{font:400 1.05rem "Special Elite",monospace}
+
+.bar{display:inline-block;vertical-align:middle;width:180px;max-width:100%;height:12px;border:1px solid var(--ink);background:#f3e9cf}
+.bar i{display:block;height:100%;background:repeating-linear-gradient(45deg,var(--navy) 0 4px,#2c4d7a 4px 8px)}
+
+nav{display:flex;gap:.3rem;margin-top:1.4rem;overflow-x:auto;border-bottom:1px solid var(--ink);padding-bottom:0}
+.tab{flex:none;padding:.15rem .9rem;font-size:.95rem;background:var(--label);color:var(--ink);border:1px solid var(--ink);border-bottom:0;border-radius:2px 14px 0 0;cursor:pointer}
+.tab[aria-current=page]{background:#f3e9cf;font-weight:700}
+
+.utitle{margin:1.6rem 0 .3rem;font-weight:600;font-size:1.5rem;line-height:1.3}
+.info{margin:0;color:var(--faded);font-style:italic}
+.uprog{margin:.8rem 0 1rem}
+
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th{text-align:left;font-weight:400;font-size:.9rem;padding:.4rem .6rem;background:var(--label);border:1px solid var(--ink);white-space:nowrap}
+td{padding:.45rem .6rem;border-bottom:1px dotted rgba(42,32,24,.5);vertical-align:top}
+tfoot td{border-top:2px solid var(--ink);border-bottom:0;font-weight:600}
+td.n{text-align:right;font-family:"Special Elite",monospace}
+td small{display:block;color:var(--faded);font-size:.85rem}
+
+.st{font-size:.85rem;padding:.2rem .7rem;border:2px solid;border-radius:3px;background:transparent;cursor:pointer;white-space:nowrap;min-width:7.2rem}
+.st.ns{color:var(--faded);border-color:var(--faded);border-style:dashed}
+.st.ip{color:var(--ochre);border-color:var(--ochre)}
+.st.cp{color:var(--green);border-color:var(--green);border-style:double;border-width:4px;transform:rotate(-1.5deg)}
+.st.rv{color:var(--navy);border-color:var(--navy);border-style:double;border-width:4px;transform:rotate(1.5deg)}
+td input{width:100%;font-size:.85rem;padding:.2rem .3rem;color:var(--ink);background:#f3e9cf;border:1px solid var(--faded);border-radius:2px}
+td input[type=number]{width:5rem}
+td input[type=date]{min-width:9.5rem}
+td input[type=text]{min-width:11rem}
+
+.tools{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+.tools button{font-size:.85rem;padding:.25rem .8rem;color:var(--ink);background:var(--label);border:1px solid var(--ink);border-radius:2px;cursor:pointer}
+.how{margin-top:1.2rem;color:var(--faded);font-size:.95rem}
+
+@media(max-width:760px){
+  body{font-size:17px}
+  .bar{width:130px}
+  table.topics thead{display:none}
+  table.topics,table.topics tbody,table.topics tr,table.topics td{display:block;width:100%}
+  table.topics tr{margin:0 0 .9rem;padding:.5rem .7rem;background:var(--card);border:1px solid var(--ink)}
+  table.topics td{border:0;padding:.2rem 0}
+  table.topics td[data-l]::before{content:attr(data-l) ": ";font:.8rem "Special Elite",monospace;color:var(--faded)}
+  table.topics td.tp{font-weight:600}
+  td input,td input[type=number],td input[type=text],td input[type=date]{width:100%;min-width:0}
+}
+td ol{margin:0;padding-left:1.3rem;font-size:.92rem} td ol li{display:list-item;padding:.05rem 0}
+.pdfl{display:block;font-size:.78rem;font-family:"Special Elite",monospace}
+@media(max-width:760px){.pdfl{display:inline}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <a href="index.html">Back home</a>
+    <h1>GS: Where to Study (Group 4 General Studies)</h1>
+    <p>75 questions | Source: TNPSC Unofficial "Where to Study" table | <a href="assets/GS_Where_to_Study.pdf" target="_blank" rel="noopener">Open the original PDF</a></p>
+    <div class="sum" id="sum"></div>
+  </header>
+  <nav id="tabs" aria-label="Units"></nav>
+  <div id="view"></div>
+</main>
+
+<script src="gs-data.js"></script>
+<script>
+const STATUSES=["Not Started","In Progress","Completed","Revised"];
+const CLS=["ns","ip","cp","rv"];
+const KEY="gs-progress-v1";
+let saved={}, cur=null;
+try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+const pc=x=>Math.round(x*100)+"%";
+const bar=x=>`<span class="bar"><i style="width:${x*100}%"></i></span>`;
+
+function get(u,i){
+  const t=u.topics[i], s=Object.assign({status:t.status,date:t.date,score:t.score,notes:t.notes},saved[u.id+"-"+i]);
+  if(!STATUSES.includes(s.status)) s.status="Not Started";
+  return s;
+}
+function stats(u){
+  let d=0,p=0,n=0;
+  u.topics.forEach((_,i)=>{const s=get(u,i).status; if(s==="Completed"||s==="Revised")d++; else if(s==="In Progress")p++; else n++;});
+  const t=u.topics.length; return {d,p,n,t,pct:t?d/t:0};
+}
+function overall(){
+  let q=0,w=0,d=0,t=0;
+  GS_UNITS.forEach(u=>{const s=stats(u);q+=u.questions;w+=u.questions*s.pct;d+=s.d;t+=s.t;});
+  return {weighted:q?w/q:0,d,t};
+}
+
+function drawSummary(){
+  const o=overall();
+  $("sum").innerHTML=`<b>Exam-weighted progress: ${pc(o.weighted)}</b>${bar(o.weighted)}<span>${o.d} of ${o.t} topics done</span>`;
+  if(cur){const s=stats(cur); const e=$("uprog"); if(e) e.innerHTML=`${bar(s.pct)} <b class="mono">${pc(s.pct)}</b> &nbsp; ${s.d} of ${s.t} topics done`;}
+}
+function drawTabs(active){
+  $("tabs").innerHTML=`<button class="tab" data-go="overview" ${active==="overview"?'aria-current="page"':""}>Overview</button>`+
+    GS_UNITS.map(u=>`<button class="tab" data-go="${u.id}" ${String(u.id)===active?'aria-current="page"':""}>${esc(u.unit)}</button>`).join("");
+}
+
+function overview(){
+  cur=null;
+  let tq=0,td=0,tdone=0,tp=0,tn=0;
+  const rows=GS_UNITS.map(u=>{
+    const s=stats(u); tq+=u.questions;td+=s.t;tdone+=s.d;tp+=s.p;tn+=s.n;
+    return `<tr><td><a href="#${u.id}">${esc(u.unit)}</a></td><td>${esc(u.title)}</td><td class="n">${u.questions}</td><td class="n">${s.t}</td><td class="n">${s.d}</td><td class="n">${s.p}</td><td class="n">${s.n}</td><td>${bar(s.pct)} <span class="mono">${pc(s.pct)}</span></td></tr>`;
+  }).join("");
+  $("view").innerHTML=`
+  <h2 class="utitle">Overview</h2>
+  <p class="info">Click a unit name to open its topics.</p>
+  <div class="wrap"><table><thead><tr><th>அலகு</th><th>தலைப்பு (Unit title)</th><th>Questions</th><th>Total topics</th><th>Completed</th><th>In progress</th><th>Not started</th><th>% complete</th></tr></thead>
+  <tbody>${rows}</tbody>
+  <tfoot><tr><td>Total</td><td></td><td class="n">${tq}</td><td class="n">${td}</td><td class="n">${tdone}</td><td class="n">${tp}</td><td class="n">${tn}</td><td>${pc(td?tdone/td:0)}</td></tr></tfoot></table></div>
+  <p class="how">Exam-weighted progress counts each unit by its number of questions. "Revised" counts as completed.</p>
+  <div class="tools">
+    <button data-act="csv">Download CSV (opens in Excel)</button>
+    <button data-act="backup">Save backup file</button>
+    <button data-act="restore">Load backup file</button>
+    <button data-act="reset">Reset everything</button>
+    <input type="file" id="file" accept=".json" hidden>
+  </div>
+  <p class="how">Your progress is saved in this browser on this device. Use "Save backup file" to move it to another device.</p>`;
+}
+
+const PDF="assets/GS_Where_to_Study.pdf";
+function unitView(u){
+  cur=u;
+  const ol=a=>a.length?`<ol>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`:"";
+  const rows=u.topics.map((t,i)=>{
+    const s=get(u,i), k=STATUSES.indexOf(s.status);
+    return `<tr data-i="${i}"><td data-l="SL">${t.n} <a class="pdfl" href="${PDF}#page=${t.page}" target="_blank" rel="noopener">PDF p.${t.page}</a></td>
+    <td class="tp">${esc(t.topic)}${t.en?`<small>${esc(t.en)}</small>`:""}${t.section?`<small>${esc(t.section)}</small>`:""}</td>
+    <td data-l="தமிழ் (Tamil books)">${ol(t.tam)}</td><td data-l="English books">${ol(t.eng)}</td>
+    <td data-l="Status"><button type="button" class="st ${CLS[k]}" title="Click to change status">${s.status}</button></td>
+    <td data-l="Date"><input type="date" data-f="date" value="${esc(s.date)}"></td>
+    <td data-l="Notes"><input type="text" data-f="notes" placeholder="Add a note" value="${esc(s.notes)}"></td></tr>`;
+  }).join("");
+  $("view").innerHTML=`
+  <h2 class="utitle">${esc(u.unit)}: ${esc(u.title)}</h2>
+  <p class="info">${esc(u.info)}</p>
+  <p class="uprog" id="uprog"></p>
+  <div class="wrap"><table class="topics"><thead><tr><th>SL</th><th>தலைப்பு / Topic</th><th>எங்கிருந்து படிப்பது (தமிழ்)</th><th>Where to study (English)</th><th>Status</th><th>Date completed</th><th>My notes</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <p class="how">Click a status to change it: Not Started, In Progress, Completed, Revised. "PDF p." opens that page of the original PDF.</p>`;
+}
+
+function route(){
+  const h=location.hash.slice(1)||"overview", u=GS_UNITS.find(x=>String(x.id)===h);
+  drawTabs(u?h:"overview");
+  u?unitView(u):overview();
+  drawSummary(); window.scrollTo(0,0);
+}
+
+function save(name,text,type){
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href);
+}
+function csv(){
+  const q=v=>`"${String(v).replace(/"/g,'""')}"`;
+  const out=[["Unit","SL","Topic (Tamil)","Topic (English)","Tamil books","English books","Status","Date Completed","My Notes"].map(q).join(",")];
+  GS_UNITS.forEach(u=>u.topics.forEach((t,i)=>{const s=get(u,i);out.push([u.unit,t.n,t.topic,t.en,t.tam.join(" | "),t.eng.join(" | "),s.status,s.date,s.notes].map(q).join(","));}));
+  save("gs-where-to-study.csv","\uFEFF"+out.join("\n"),"text/csv;charset=utf-8");
+}
+
+document.addEventListener("click",e=>{
+  const go=e.target.closest("[data-go]"); if(go){location.hash=go.dataset.go; if(location.hash.slice(1)===go.dataset.go)return; return;}
+  const act=e.target.closest("[data-act]");
+  if(act){
+    const a=act.dataset.act;
+    if(a==="csv")csv();
+    if(a==="backup")save("ctrack-backup.json",JSON.stringify(saved),"application/json");
+    if(a==="restore")$("file").click();
+    if(a==="reset"&&confirm("Clear all saved progress on this device?")){saved={};persist();route();}
+    return;
+  }
+  const b=e.target.closest(".st"); if(!b||!cur)return;
+  const tr=b.closest("tr"), i=tr.dataset.i, key=cur.id+"-"+i, s=get(cur,i);
+  const k=(STATUSES.indexOf(s.status)+1)%STATUSES.length, status=STATUSES[k];
+  const rec=saved[key]=Object.assign({},saved[key],{status});
+  const dateEl=tr.querySelector('[data-f="date"]');
+  if((status==="Completed")&&!get(cur,i).date){rec.date=new Date().toISOString().slice(0,10);dateEl.value=rec.date;}
+  if(status==="Not Started"){rec.date="";dateEl.value="";}
+  b.className="st "+CLS[k]; b.textContent=status;
+  persist(); drawSummary();
+});
+document.addEventListener("input",e=>{
+  const f=e.target.dataset&&e.target.dataset.f; if(!f||!cur)return;
+  const i=e.target.closest("tr").dataset.i, key=cur.id+"-"+i;
+  let v=e.target.value;
+  if(f==="score"&&v!==""){v=Math.max(0,Math.min(100,Number(v)));}
+  saved[key]=Object.assign({},saved[key],{[f]:v}); persist();
+});
+document.addEventListener("change",e=>{
+  if(e.target.id!=="file")return;
+  const r=new FileReader();
+  r.onload=()=>{try{saved=JSON.parse(r.result);persist();route();}catch(err){alert("That file is not a valid backup.");}};
+  r.readAsText(e.target.files[0]);
+});
+window.addEventListener("hashchange",route);
+route();
+</script>
+</body>
+</html>
