@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tamil Study Map | Abies</title>
+<link rel="icon" href="assets/abies.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Noto+Serif+Tamil:wght@400;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#e2d3ac;--label:#d3bf90;--card:#ecdfbd;--ink:#2a2018;--faded:#6f5d45;--navy:#1f3a5f;--ochre:#a8741a;--green:#3f5d3a}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{margin:0;color:var(--ink);background:var(--paper);font:18px/1.6 "IM Fell English","Noto Serif Tamil",Georgia,serif}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:10;
+  background:radial-gradient(ellipse at center,transparent 55%,rgba(84,52,14,.28) 100%),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .08 .5 0 0 0 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+main{padding:1.8rem 5vw 4rem}
+a{color:var(--navy);text-decoration:none;border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--navy)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.mono,button,input,th,.tab{font-family:"Special Elite","Courier New",monospace}
+
+header{padding-bottom:1.2rem;border-bottom:4px double var(--ink)}
+header h1{margin:.4rem 0 .2rem;font-weight:400;font-size:2.1rem;line-height:1.25}
+header p{margin:0;color:var(--faded);font-style:italic}
+.sum{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.2rem;margin-top:1rem}
+.sum b{font:400 1.05rem "Special Elite",monospace}
+
+.bar{display:inline-block;vertical-align:middle;width:180px;max-width:100%;height:12px;border:1px solid var(--ink);background:#f3e9cf}
+.bar i{display:block;height:100%;background:repeating-linear-gradient(45deg,var(--navy) 0 4px,#2c4d7a 4px 8px)}
+
+nav{display:flex;gap:.3rem;margin-top:1.4rem;overflow-x:auto;border-bottom:1px solid var(--ink);padding-bottom:0}
+.tab{flex:none;padding:.15rem .9rem;font-size:.95rem;background:var(--label);color:var(--ink);border:1px solid var(--ink);border-bottom:0;border-radius:2px 14px 0 0;cursor:pointer}
+.tab[aria-current=page]{background:#f3e9cf;font-weight:700}
+
+.utitle{margin:1.6rem 0 .3rem;font-weight:600;font-size:1.5rem;line-height:1.3}
+.info{margin:0;color:var(--faded);font-style:italic}
+.uprog{margin:.8rem 0 1rem}
+
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th{text-align:left;font-weight:400;font-size:.9rem;padding:.4rem .6rem;background:var(--label);border:1px solid var(--ink);white-space:nowrap}
+td{padding:.45rem .6rem;border-bottom:1px dotted rgba(42,32,24,.5);vertical-align:top}
+tfoot td{border-top:2px solid var(--ink);border-bottom:0;font-weight:600}
+td.n{text-align:right;font-family:"Special Elite",monospace}
+td small{display:block;color:var(--faded);font-size:.85rem}
+
+.st{font-size:.85rem;padding:.2rem .7rem;border:2px solid;border-radius:3px;background:transparent;cursor:pointer;white-space:nowrap;min-width:7.2rem}
+.st.ns{color:var(--faded);border-color:var(--faded);border-style:dashed}
+.st.ip{color:var(--ochre);border-color:var(--ochre)}
+.st.cp{color:var(--green);border-color:var(--green);border-style:double;border-width:4px;transform:rotate(-1.5deg)}
+.st.rv{color:var(--navy);border-color:var(--navy);border-style:double;border-width:4px;transform:rotate(1.5deg)}
+td input{width:100%;font-size:.85rem;padding:.2rem .3rem;color:var(--ink);background:#f3e9cf;border:1px solid var(--faded);border-radius:2px}
+td input[type=number]{width:5rem}
+td input[type=date]{min-width:9.5rem}
+td input[type=text]{min-width:11rem}
+
+.tools{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+.tools button{font-size:.85rem;padding:.25rem .8rem;color:var(--ink);background:var(--label);border:1px solid var(--ink);border-radius:2px;cursor:pointer}
+.how{margin-top:1.2rem;color:var(--faded);font-size:.95rem}
+
+@media(max-width:760px){
+  body{font-size:17px}
+  .bar{width:130px}
+  table.topics thead{display:none}
+  table.topics,table.topics tbody,table.topics tr,table.topics td{display:block;width:100%}
+  table.topics tr{margin:0 0 .9rem;padding:.5rem .7rem;background:var(--card);border:1px solid var(--ink)}
+  table.topics td{border:0;padding:.2rem 0}
+  table.topics td[data-l]::before{content:attr(data-l) ": ";font:.8rem "Special Elite",monospace;color:var(--faded)}
+  table.topics td.tp{font-weight:600}
+  td input,td input[type=number],td input[type=text],td input[type=date]{width:100%;min-width:0}
+}
+.k{display:flex;flex-wrap:wrap;gap:.4rem 2rem;margin:.8rem 0 1rem}
+.k div{font-family:"Special Elite",monospace}
+.k b{font-size:1.25rem;font-weight:400}
+.chip{font:.8rem "Special Elite",monospace;padding:.1rem .5rem;border:1px solid;border-radius:2px;white-space:nowrap}
+.chip.ok{color:var(--green)}
+.chip.bad{color:#8a2b1f;border-style:dashed}
+.ok{color:var(--green)} .bad{color:#8a2b1f}
+td.rf{font-size:.9rem;color:var(--faded)}
+select{font:.9rem "Special Elite",monospace;color:var(--ink);background:#f3e9cf;border:1px solid var(--ink);border-radius:2px;padding:.2rem .4rem;max-width:100%}
+.filter{margin:.2rem 0 .8rem}
+.note{margin:.4rem 0;color:var(--faded);font-size:.95rem}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <a href="index.html">Back home</a>
+    <h1>Tamil Study Map</h1>
+    <p>1,190-page Tamil study PDF: page map and topics missing from it</p>
+    <div class="sum" id="sum"></div>
+  </header>
+  <nav id="tabs" aria-label="Sections"></nav>
+  <div id="view"></div>
+</main>
+
+<script src="tamilm-data.js"></script>
+<script>
+const MS=["Not started","Learning","Done"], MC=["ns","ip","cp"];
+const KEY="tamilm-progress-v1";
+let saved={}, tab="pages", unitF="";
+try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $=id=>document.getElementById(id);
+const pc=x=>Math.round(x*100)+"%";
+const num=n=>n.toLocaleString("en-IN");
+const bar=x=>`<span class="bar"><i style="width:${x*100}%"></i></span>`;
+
+const isDone=p=>(saved["p"+p.n]||p.done)==="Yes";
+const mstat=m=>{const s=saved["m"+m.n]||m.status;return MS.includes(s)?s:"Not started";};
+const plen=p=>p.end-p.start+1;
+const units=a=>[...new Set(a.map(x=>x.unit))];
+
+function pageTotals(){
+  const total=TAMILM.pages.reduce((s,p)=>s+plen(p),0);
+  const done=TAMILM.pages.reduce((s,p)=>s+(isDone(p)?plen(p):0),0);
+  return {total,done,pct:total?done/total:0,check:total===TAMILM.pdfPages?"OK":"CHECK"};
+}
+function missTotals(){
+  let d=0,l=0,n=0,ns=0;
+  TAMILM.missing.forEach(m=>{const s=mstat(m);if(s==="Done")d++;else if(s==="Learning")l++;else n++;if(!m.ref)ns++;});
+  return {d,l,n,ns,t:TAMILM.missing.length};
+}
+
+function drawSummary(){
+  const p=pageTotals(), m=missTotals();
+  $("sum").innerHTML=`<b>PDF: ${pc(p.pct)} done</b>${bar(p.pct)}<span>${num(p.done)} of ${num(p.total)} pages</span><span>Missing topics: ${m.d} of ${m.t} done</span>`;
+  if($("tot")){
+    $("tot").innerHTML=`<div>Total pages in map<br><b>${num(p.total)}</b></div><div>Pages marked done<br><b>${num(p.done)}</b></div><div>% of PDF done<br><b>${pc(p.pct)}</b></div><div>Check: PDF has ${num(TAMILM.pdfPages)} pages<br><b class="${p.check==="OK"?"ok":"bad"}">${p.check}</b></div>`;
+  }
+  if($("mtot")){
+    $("mtot").innerHTML=`<div>Done<br><b>${m.d}</b></div><div>Learning<br><b>${m.l}</b></div><div>Not started<br><b>${m.n}</b></div><div>No source found<br><b class="${m.ns?"bad":""}">${m.ns}</b></div>`;
+  }
+}
+function drawTabs(){
+  const t=[["pages","Page Map"],["missing","Missing from PDF"]];
+  $("tabs").innerHTML=t.map(([id,l])=>`<button class="tab" data-go="${id}" ${id===tab?'aria-current="page"':""}>${l}</button>`).join("");
+}
+const filterSel=list=>`<p class="filter"><label>Unit: <select id="unitSel"><option value="">All units</option>${units(list).map(u=>`<option ${u===unitF?"selected":""}>${esc(u)}</option>`).join("")}</select></label></p>`;
+const tools=`<div class="tools"><button data-act="csv">Download CSV (opens in Excel)</button><button data-act="backup">Save backup file</button><button data-act="restore">Load backup file</button><button data-act="reset">Reset everything</button><input type="file" id="file" accept=".json" hidden></div>
+<p class="how">Your progress is saved in this browser on this device. Use "Save backup file" to move it to another device.</p>`;
+
+function pagesView(){
+  const rows=TAMILM.pages.filter(p=>!unitF||p.unit===unitF).map(p=>{
+    const d=isDone(p);
+    return `<tr data-n="${p.n}"><td data-l="#">${p.n}</td><td data-l="Unit">${esc(p.unit)}</td><td class="tp">${esc(p.topic)}</td>
+    <td class="n" data-l="Start page">${p.start}</td><td class="n" data-l="End page">${p.end}</td><td class="n" data-l="Pages">${plen(p)}</td>
+    <td data-l="Done?"><button type="button" class="st ${d?"cp":"ns"}" title="Click to change">${d?"Yes":"No"}</button></td>
+    <td class="rf" data-l="Also study">${esc(p.ref)}</td></tr>`;}).join("");
+  $("view").innerHTML=`<h2 class="utitle">Page Map</h2><p class="info">${esc(TAMILM.pageNote)}</p>
+  <div class="k" id="tot"></div>${filterSel(TAMILM.pages)}
+  <div class="wrap"><table class="topics"><thead><tr><th>#</th><th>Unit</th><th>Topic</th><th>Start page</th><th>End page</th><th>Pages</th><th>Done?</th><th>Where to study besides this PDF</th></tr></thead><tbody>${rows}</tbody></table></div>
+  ${TAMILM.notes.map(n=>`<p class="note">${esc(n)}</p>`).join("")}
+  <p class="how">Click Done? to switch between No and Yes. Page numbers are PDF viewer page numbers.</p>${tools}`;
+}
+function missingView(){
+  const rows=TAMILM.missing.filter(m=>!unitF||m.unit===unitF).map(m=>{
+    const k=MS.indexOf(mstat(m));
+    return `<tr data-n="${m.n}"><td data-l="#">${m.n}</td><td data-l="Unit">${esc(m.unit)}</td><td class="tp">${esc(m.topic)}</td>
+    <td class="rf" data-l="Where to study">${m.ref?esc(m.ref):"None listed"}</td>
+    <td data-l="Source check"><span class="chip ${m.ref?"ok":"bad"}">${m.ref?"Textbook":"NO SOURCE"}</span></td>
+    <td class="rf" data-l="Action">${esc(m.action)}</td>
+    <td data-l="Status"><button type="button" class="st ${MC[k]}" title="Click to change status">${MS[k]}</button></td></tr>`;}).join("");
+  $("view").innerHTML=`<h2 class="utitle">Missing from PDF</h2><p class="info">${esc(TAMILM.missingNote)}</p>
+  <div class="k" id="mtot"></div>${filterSel(TAMILM.missing)}
+  <div class="wrap"><table class="topics"><thead><tr><th>#</th><th>Unit</th><th>Missing topic</th><th>Where to study (textbook ref)</th><th>Source check</th><th>Suggested action</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <p class="how">Click a status to change it: Not started, Learning, Done.</p>${tools}`;
+}
+
+function route(keepScroll){
+  const nt=location.hash.slice(1)==="missing"?"missing":"pages"; if(nt!==tab)unitF=""; tab=nt;
+  drawTabs(); tab==="pages"?pagesView():missingView(); drawSummary();
+  if(!keepScroll)window.scrollTo(0,0);
+}
+function save(name,text,type){
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href);
+}
+function csv(){
+  const q=v=>`"${String(v).replace(/"/g,'""')}"`; let out;
+  if(tab==="pages"){
+    out=[["#","Unit","Topic","Start page","End page","Pages","Done?","Where to study besides this PDF"].map(q).join(",")];
+    TAMILM.pages.forEach(p=>out.push([p.n,p.unit,p.topic,p.start,p.end,plen(p),isDone(p)?"Yes":"No",p.ref].map(q).join(",")));
+  }else{
+    out=[["#","Unit","Missing topic","Where to study","Source check","Suggested action","Status"].map(q).join(",")];
+    TAMILM.missing.forEach(m=>out.push([m.n,m.unit,m.topic,m.ref,m.ref?"Textbook":"NO SOURCE",m.action,mstat(m)].map(q).join(",")));
+  }
+  save(tab==="pages"?"tamil-page-map.csv":"tamil-missing-topics.csv","\uFEFF"+out.join("\n"),"text/csv;charset=utf-8");
+}
+
+document.addEventListener("click",e=>{
+  const go=e.target.closest("[data-go]"); if(go){location.hash=go.dataset.go;return;}
+  const act=e.target.closest("[data-act]");
+  if(act){
+    const a=act.dataset.act;
+    if(a==="csv")csv();
+    if(a==="backup")save("tamilm-backup.json",JSON.stringify(saved),"application/json");
+    if(a==="restore")$("file").click();
+    if(a==="reset"&&confirm("Clear all saved progress on this device?")){saved={};persist();route(true);}
+    return;
+  }
+  const b=e.target.closest(".st"); if(!b)return;
+  const n=Number(b.closest("tr").dataset.n);
+  if(tab==="pages"){
+    const p=TAMILM.pages.find(x=>x.n===n), v=isDone(p)?"No":"Yes";
+    saved["p"+n]=v; b.textContent=v; b.className="st "+(v==="Yes"?"cp":"ns");
+  }else{
+    const m=TAMILM.missing.find(x=>x.n===n), k=(MS.indexOf(mstat(m))+1)%MS.length;
+    saved["m"+n]=MS[k]; b.textContent=MS[k]; b.className="st "+MC[k];
+  }
+  persist(); drawSummary();
+});
+document.addEventListener("change",e=>{
+  if(e.target.id==="unitSel"){unitF=e.target.value;route(true);return;}
+  if(e.target.id==="file"){
+    const r=new FileReader();
+    r.onload=()=>{try{saved=JSON.parse(r.result);persist();route(true);}catch(err){alert("That file is not a valid backup.");}};
+    r.readAsText(e.target.files[0]);
+  }
+});
+window.addEventListener("hashchange",()=>route());
+route();
+</script>
+</body>
+</html>
