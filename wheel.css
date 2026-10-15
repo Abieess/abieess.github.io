@@ -1,0 +1,109 @@
+/* ---------- colours ---------- */
+:root{
+  --paper:#e2d3ac;
+  --label:#d3bf90;
+  --card:#ecdfbd;
+  --ink:#2a2018;
+  --faded:#6f5d45;
+  --navy:#1f3a5f;
+  --ochre:#a8741a;
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{
+  margin:0; color:var(--ink); background:var(--paper);
+  font:19px/1.6 "IM Fell English","Noto Serif Tamil",Georgia,serif;
+  -webkit-font-smoothing:antialiased;
+}
+/* paper grain and darkened edges over the whole page */
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:10;
+  background:
+    radial-gradient(ellipse at center,transparent 55%,rgba(84,52,14,.28) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .08 .5 0 0 0 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main{padding:1.8rem 5vw 3rem}
+a{color:var(--navy);text-decoration:none;border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--navy)}
+a:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.sr{position:absolute;left:-9999px}
+
+/* ---------- header ---------- */
+header{padding-bottom:1.2rem;border-bottom:4px double var(--ink)}
+h1{margin:.4rem 0 .2rem;font-weight:400;font-size:3rem;line-height:1.1;letter-spacing:.02em}
+.tagline{margin:0;color:var(--faded);font-style:italic}
+
+/* ---------- layout ---------- */
+.layout{
+  display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:2rem 4vw; margin-top:1.8rem; align-items:start;
+}
+
+/* ---------- the wheel ---------- */
+.stage{display:flex;justify-content:center}
+.wheelbox{position:relative;width:min(100%,720px)}
+#wheel{display:block;width:100%;aspect-ratio:1/1;cursor:pointer;filter:drop-shadow(2px 4px 3px rgba(42,32,24,.35))}
+.pin{
+  position:absolute; left:50%; top:-3%; width:9%; margin-left:-4.5%;
+  transform-origin:50% 30%; transition:transform .07s ease-out;
+  filter:drop-shadow(1px 2px 1px rgba(42,32,24,.5)); pointer-events:none;
+}
+.pin.flick{transform:rotate(-16deg)}
+
+/* ---------- panel ---------- */
+h2{
+  display:inline-block;margin:0 0 .6rem;padding:.05rem .9rem .1rem;
+  font:400 1.05rem/1.5 "Special Elite","Courier New",monospace;
+  background:var(--label);border:1px solid var(--ink);border-radius:2px 14px 0 0;
+}
+textarea{
+  display:block;width:100%;resize:vertical;min-height:11rem;
+  font:1.05rem/1.5 "IM Fell English","Noto Serif Tamil",Georgia,serif;
+  color:var(--ink);background:#f3e9cf;border:1px solid var(--ink);border-radius:2px;padding:.6rem .8rem;
+  background-image:repeating-linear-gradient(transparent 0 1.55rem,rgba(31,58,95,.18) 1.55rem calc(1.55rem + 1px));
+  background-attachment:local;
+}
+.hint{margin:.4rem 0 1rem;font:.85rem "Special Elite",monospace;color:var(--faded)}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:.8rem}
+button{
+  font:.9rem "Special Elite","Courier New",monospace;color:var(--ink);
+  background:var(--label);border:1px solid var(--ink);border-radius:2px;padding:.4rem 1rem;cursor:pointer;
+}
+button:hover:not(:disabled){background:#dccb9f}
+button:disabled{opacity:.5;cursor:not-allowed}
+button.primary{background:var(--navy);color:#f6ecd2;font-size:1.05rem;padding:.5rem 1.4rem;border-color:var(--ink);box-shadow:2px 2px 0 var(--ink)}
+button.primary:hover:not(:disabled){background:#2a4d7c}
+button.primary:active:not(:disabled){transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+button.small{font-size:.8rem;padding:.2rem .7rem}
+.opt{display:flex;align-items:center;gap:.5rem;margin:.2rem 0;font:.9rem "Special Elite",monospace;cursor:pointer}
+input[type=checkbox]{accent-color:var(--navy);width:1.05rem;height:1.05rem}
+
+/* ---------- result stamp ---------- */
+.result{
+  margin:1.2rem 0 1.6rem;padding:.9rem 1rem;text-align:center;
+  background:var(--card);border:3px double var(--ink);transform:rotate(-1deg);
+}
+.result .lbl{font:.85rem "Special Elite",monospace;color:var(--faded)}
+.result .win{display:block;margin-top:.2rem;font-size:2.3rem;font-weight:600;line-height:1.2;color:var(--navy);overflow-wrap:anywhere}
+.result.pop{animation:stamp .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes stamp{from{transform:scale(1.6) rotate(-7deg);opacity:0}to{transform:rotate(-1deg);opacity:1}}
+
+/* ---------- history ---------- */
+.history{margin:0 0 .6rem;padding-left:1.8rem}
+.history li{padding:.1rem 0;border-bottom:1px dotted rgba(42,32,24,.45)}
+.history:empty{display:none}
+.history:not(:empty)+#noHistory{display:none}
+
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--ink);font:.85rem "Special Elite",monospace;color:var(--faded)}
+
+/* ---------- phone ---------- */
+@media (max-width:860px){
+  body{font-size:18px}
+  .layout{grid-template-columns:1fr}
+  h1{font-size:2.3rem}
+  .wheelbox{width:min(100%,560px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .result.pop{animation:none}
+  .pin{transition:none}
+}
