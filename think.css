@@ -1,0 +1,106 @@
+/* ---------- colours ---------- */
+:root{
+  --paper:#e2d3ac;
+  --label:#d3bf90;
+  --card:#ecdfbd;
+  --ink:#2a2018;
+  --faded:#6f5d45;
+  --navy:#1f3a5f;
+  --ochre:#a8741a;
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{
+  margin:0; color:var(--ink); background:var(--paper);
+  font:19px/1.6 "IM Fell English","Noto Serif Tamil",Georgia,serif;
+  -webkit-font-smoothing:antialiased;
+}
+/* paper grain and darkened edges over the whole page */
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:10;
+  background:
+    radial-gradient(ellipse at center,transparent 55%,rgba(84,52,14,.28) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .2 0 0 0 0 .08 .5 0 0 0 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main{padding:1.8rem 5vw 3rem}
+a{color:var(--navy);text-decoration:none;border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--navy)}
+a:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.sr{position:absolute;left:-9999px}
+
+/* ---------- header ---------- */
+header{padding-bottom:1.2rem;border-bottom:4px double var(--ink)}
+h1{margin:.4rem 0 .2rem;font-weight:400;font-size:3rem;line-height:1.1;letter-spacing:.02em}
+.tagline{margin:0;color:var(--faded);font-style:italic}
+
+/* ---------- header extras ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
+.chip{font:.85rem "Special Elite",monospace;padding:.1rem .7rem;border:1px solid var(--ink);background:var(--card);border-radius:2px}
+.seg{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-top:.9rem}
+.seg span{font:.9rem "Special Elite",monospace;color:var(--faded)}
+button{font:.9rem "Special Elite","Courier New",monospace;color:var(--ink);background:var(--label);border:1px solid var(--ink);border-radius:2px;padding:.3rem .9rem;cursor:pointer}
+button:hover{background:#dccb9f}
+.seg button[aria-pressed=true]{background:var(--navy);color:#f6ecd2}
+
+/* ---------- tabs ---------- */
+nav{display:flex;gap:.3rem;margin-top:1.4rem;overflow-x:auto;border-bottom:1px solid var(--ink)}
+.tab{flex:none;padding:.15rem .9rem;background:var(--label);border-radius:2px 14px 0 0;border-bottom:0}
+.tab[aria-current=page]{background:#f3e9cf;font-weight:700}
+
+/* ---------- content ---------- */
+.pt{margin:1.6rem 0 .3rem;font-weight:600;font-size:1.8rem;line-height:1.25}
+.pt span{font:.95rem "Special Elite",monospace;color:var(--faded);margin-left:.6rem;white-space:nowrap}
+.idea{margin:.2rem 0 1rem;font-size:1.1rem;font-style:italic;max-width:60rem}
+h3.sub{display:inline-block;margin:1.6rem 0 .7rem;padding:.05rem .9rem .1rem;font:400 1.05rem/1.5 "Special Elite",monospace;background:var(--label);border:1px solid var(--ink);border-radius:2px 14px 0 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}
+.card{padding:.8rem 1rem;background:var(--card);border:1px solid var(--ink);box-shadow:2px 2px 0 rgba(42,32,24,.35)}
+.card h4{margin:0 0 .4rem;font:400 1rem "Special Elite",monospace;color:var(--navy)}
+.card p{margin:0}
+.card ul{margin:0;padding-left:1.1rem}
+.card li{padding:.15rem 0}
+.card.phase.now{border:3px double var(--navy);background:#f3e9cf}
+ul.moves{list-style:none;padding:0}
+ul.moves label{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}
+input[type=checkbox]{accent-color:var(--navy);width:1.1rem;height:1.1rem;margin-top:.3rem;flex:none}
+.hint{margin:.5rem 0;font:.85rem "Special Elite",monospace;color:var(--faded)}
+ol.steps{max-width:50rem}
+
+/* ---------- bars ---------- */
+.bars{display:grid;gap:.4rem;margin:.4rem 0 .8rem}
+.bar{display:grid;grid-template-columns:minmax(8rem,16rem) 1fr 3rem;gap:.6rem;align-items:center;font-size:.95rem}
+.bt{display:block;height:12px;border:1px solid var(--ink);background:#f3e9cf}
+.bt i{display:block;height:100%;background:repeating-linear-gradient(45deg,var(--navy) 0 4px,#2c4d7a 4px 8px)}
+.bar b{font:400 .9rem "Special Elite",monospace;text-align:right}
+
+/* ---------- forms and tables ---------- */
+.card label{display:block;margin:.4rem 0;font:.9rem "Special Elite",monospace}
+input[type=number],input[type=text],input[type=date],select{font:.9rem "Special Elite",monospace;color:var(--ink);background:#f3e9cf;border:1px solid var(--faded);border-radius:2px;padding:.2rem .4rem;max-width:100%}
+.card input[type=number]{width:6rem;margin-left:.4rem}
+.out{margin-top:.6rem!important;font-size:1rem}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%}
+th{text-align:left;font:400 .9rem "Special Elite",monospace;padding:.4rem .6rem;background:var(--label);border:1px solid var(--ink);white-space:nowrap}
+td{padding:.4rem .6rem;border-bottom:1px dotted rgba(42,32,24,.5);vertical-align:top}
+td.tp{font-weight:600}
+td input[type=text]{width:100%;min-width:10rem}
+td .bt{min-width:6rem}
+.del{font-size:.8rem;padding:.05rem .5rem;color:var(--faded)}
+button[data-add]{margin-top:.6rem}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--ink);font:.85rem "Special Elite",monospace;color:var(--faded)}
+
+@media (max-width:760px){
+  body{font-size:18px}
+  h1{font-size:2.3rem}
+  .pt{font-size:1.5rem}
+  .pt span{display:block;margin:0}
+  .grid{grid-template-columns:1fr}
+  .bar{grid-template-columns:1fr 3rem}
+  .bar .bl{grid-column:1/-1}
+  .bar .bt{grid-column:1}
+  table.tbl,table.tbl tbody,table.tbl tr,table.tbl td{display:block;width:100%}
+  table.tbl thead{display:none}
+  table.tbl tr{margin:0 0 .8rem;padding:.4rem .6rem;background:var(--card);border:1px solid var(--ink)}
+  table.tbl td{border:0;padding:.15rem 0}
+  table.tbl td[data-l]::before{content:attr(data-l) ": ";font:.8rem "Special Elite",monospace;color:var(--faded)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
