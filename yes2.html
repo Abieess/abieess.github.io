@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNPSC Group IV — Study Command Center</title>
+<style>
+  /* ---------- VINTAGE RESET & VARIABLES ---------- */
+  :root {
+    --paper: #F4E8D1;
+    --ink: #3E2723;
+    --ink-light: #6D4C41;
+    --accent: #8B5E3C;
+    --gold: #C9A227;
+    --border: #D7C4A1;
+    --card-bg: #FBF5E9;
+    --shadow: rgba(62, 39, 35, 0.12);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.7;
+    min-height: 100vh;
+    position: relative;
+    padding: 2rem 1rem;
+    /* Paper grain texture via layered gradients */
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(215, 196, 161, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(215, 196, 161, 0.2) 0%, transparent 50%),
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(62, 39, 35, 0.02) 2px, rgba(62, 39, 35, 0.02) 4px);
+  }
+
+  /* ---------- TYPOGRAPHY ---------- */
+  h1, h2, h3 {
+    font-family: 'Playfair Display', 'Georgia', serif;
+    letter-spacing: 0.5px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 0.3rem;
+    border-bottom: 3px double var(--accent);
+    display: inline-block;
+    padding-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-style: italic;
+    color: var(--ink-light);
+    font-size: 1.05rem;
+    margin-top: 0.4rem;
+  }
+
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 1.4rem;
+    letter-spacing: 8px;
+    margin: 0.5rem 0;
+  }
+
+  /* ---------- CARDS ---------- */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 2px 3px 0 var(--shadow);
+    position: relative;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+  }
+
+  /* ---------- GRID ---------- */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* ---------- COUNTDOWN ---------- */
+  .countdown-box {
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .countdown-unit {
+    text-align: center;
+  }
+
+  .countdown-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+  }
+
+  .countdown-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ink-light);
+  }
+
+  /* ---------- PROGRESS BAR ---------- */
+  .progress-bar-container {
+    background: var(--border);
+    height: 12px;
+    border-radius: 0;
+    margin: 1rem 0 0.5rem;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+    transition: width 0.6s ease;
+  }
+
+  /* ---------- CHECKLIST ---------- */
+  .checklist {
+    list-style: none;
+  }
+
+  .checklist li {
+    padding: 0.6rem 0;
+    border-bottom: 1px dotted var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .checklist li:last-child {
+    border-bottom: none;
+  }
+
+  .checklist input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--accent);
+    border-radius: 2px;
+    background: var(--card-bg);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 4px;
+    position: relative;
+  }
+
+  .checklist input[type="checkbox"]:checked {
+    background: var(--accent);
+  }
+
+  .checklist input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: -2px;
+    left: 2px;
+    color: var(--paper);
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .checklist label {
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+
+  /* ---------- TIPS BOX ---------- */
+  .tip-box {
+    background: #EFE3CC;
+    border-left: 4px solid var(--gold);
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 600px) {
+    body { padding: 1rem 0.5rem; }
+    .card { padding: 1rem; }
+    .countdown-number { font-size: 1.8rem; }
+    .countdown-timer { gap: 1rem; }
+  }
+
+  /* ---------- PRINT-LIKE DECORATIVE RULE ---------- */
+  .rule {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.2rem 0;
+    position: relative;
+  }
+
+  .rule::after {
+    content: '❦';
+    position: absolute;
+    top: -0.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card-bg);
+    padding: 0 0.5rem;
+    color: var(--gold);
+    font-size: 0.9rem;
+  }
+
+  footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    margin-top: 2rem;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="ornament">✦ ✦ ✦</div>
+    <h1>TNPSC Group IV</h1>
+    <p class="subtitle">Study Command Center — Combined Civil Services Examination IV (Code 496)</p>
+    <div class="ornament">✦ ✦ ✦</div>
+  </header>
+
+  <!-- COUNTDOWN -->
+  <div class="card countdown-box">
+    <h2>Countdown to Examination</h2>
+    <p style="font-size:0.9rem; color:var(--ink-light); margin-bottom:0.5rem;">
+      Target: <strong>10 January 2027</strong>
+    </p>
+    <div class="countdown-timer" id="countdown">
+      <div class="countdown-unit">
+        <span class="countdown-number" id="days">--</span>
+        <span class="countdown-label">Days</span>
+      </div>
+      <div class="countdown-unit">
+        <span class="countdown-number" id="hours">--</span>
+        <span class="countdown-label">Hours</span>
+      </div>
+      <div class="countdown-unit">
+        <span class="countdown-number" id="minutes">--</span>
+        <span class="countdown-label">Minutes</span>
+      </div>
+      <div class="countdown-unit">
+        <span class="countdown-number" id="seconds">--</span>
+        <span class="countdown-label">Seconds</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEIGHTAGE -->
+  <div class="card">
+    <h2>Paper Weightage at a Glance</h2>
+    <p style="font-size:0.9rem; margin-bottom:0.8rem;">
+      Total: <strong>200 questions · 300 marks · 3 hours · No negative marking</strong>
+    </p>
+    <div class="grid-2">
+      <div>
+        <h3>Tamil (Part C)</h3>
+        <p style="font-size:0.9rem;">100 questions · 150 marks · <strong>50% of paper</strong></p>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" style="width:50%;"></div>
+        </div>
+      </div>
+      <div>
+        <h3>General Studies (Part A)</h3>
+        <p style="font-size:0.9rem;">75 questions · 112.5 marks · 37.5%</p>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" style="width:37.5%;"></div>
+        </div>
+      </div>
+      <div>
+        <h3>Aptitude & Reasoning (Part B)</h3>
+        <p style="font-size:0.9rem;">25 questions · 37.5 marks · 12.5%</p>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" style="width:12.5%;"></div>
+        </div>
+      </div>
+      <div>
+        <h3>GS Heavyweights (Units IV–VI)</h3>
+        <p style="font-size:0.9rem;">55 of 75 GS questions · Polity, Economy, TN History</p>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" style="width:73%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 80-DAY PHASES -->
+  <div class="card">
+    <h2>80-Day Phase Tracker</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Phase 1 · Days 1–30</h3>
+        <p style="font-size:0.9rem;">Gatekeeper & Heavyweights</p>
+        <ul class="checklist">
+          <li><input type="checkbox" id="p1a"><label for="p1a">Tamil grammar & vocabulary daily</label></li>
+          <li><input type="checkbox" id="p1b"><label for="p1b">Thirukkural (20 chapters)</label></li>
+          <li><input type="checkbox" id="p1c"><label for="p1c">GS Unit VI — TN History & Culture</label></li>
+          <li><input type="checkbox" id="p1d"><label for="p1d">GS Unit IV — Indian Polity</label></li>
+          <li><input type="checkbox" id="p1e"><label for="p1e">Aptitude basics daily</label></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Phase 2 · Days 31–55</h3>
+        <p style="font-size:0.9rem;">Complete Syllabus & Start PYQs</p>
+        <ul class="checklist">
+          <li><input type="checkbox" id="p2a"><label for="p2a">GS Unit V — Economy & TN Schemes</label></li>
+          <li><input type="checkbox" id="p2b"><label for="p2b">GS Units I–III (Science, Geography, History)</label></li>
+          <li><input type="checkbox" id="p2c"><label for="p2c">Tamil literature & scholars</label></li>
+          <li><input type="checkbox" id="p2d"><label for="p2d">Aptitude: SI, CI, Area, Volume, Reasoning</label></li>
+          <li><input type="checkbox" id="p2e"><label for="p2e">1 PYQ paper per week</label></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="rule">
+    <div class="grid-2">
+      <div>
+        <h3>Phase 3 · Days 56–80</h3>
+        <p style="font-size:0.9rem;">Mocks, Revision & Error Correction</p>
+        <ul class="checklist">
+          <li><input type="checkbox" id="p3a"><label for="p3a">1 full mock per week (2–3 in final 3 weeks)</label></li>
+          <li><input type="checkbox" id="p3b"><label for="p3b">Error notebook review</label></li>
+          <li><input type="checkbox" id="p3c"><label for="p3c">Current affairs (12 months)</label></li>
+          <li><input type="checkbox" id="p3d"><label for="p3d">Tamil sectional tests midweek</label></li>
+          <li><input type="checkbox" id="p3e"><label for="p3e">No new topics after Day 65</label></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Exam-Day Checklist</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" id="e1"><label for="e1">Attempt all 200 questions (no negative marking)</label></li>
+          <li><input type="checkbox" id="e2"><label for="e2">Tamil: ~60 min</label></li>
+          <li><input type="checkbox" id="e3"><label for="e3">GS: ~45–50 min</label></li>
+          <li><input type="checkbox" id="e4"><label for="e4">Aptitude: ~30–35 min</label></li>
+          <li><input type="checkbox" id="e5"><label for="e5">Last 10–15 min: fill every blank</label></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="card">
+    <h2>Non-Negotiable Rules</h2>
+    <div class="tip-box">
+      <strong>1.</strong> Read the official Code 496 syllabus before buying any book.
+    </div>
+    <div class="tip-box">
+      <strong>2.</strong> Tamil is the gatekeeper — 150 marks and a qualifying threshold. Do not treat it as optional.
+    </div>
+    <div class="tip-box">
+      <strong>3.</strong> GS Units IV, V, and VI carry 55 of 75 GS questions. Study them first.
+    </div>
+    <div class="tip-box">
+      <strong>4.</strong> Solve questions daily. Reading is not studying.
+    </div>
+    <div class="tip-box">
+      <strong>5.</strong> Start full-length mocks by Day 40. Exam endurance is built, not discovered.
+    </div>
+  </div>
+
+  <footer>
+    “Discipline is the bridge between goals and accomplishment.” — Prepared for TNPSC Group IV, January 2027.
+  </footer>
+</div>
+
+<script>
+  // ---------- COUNTDOWN ----------
+  const examDate = new Date('2027-01-10T09:30:00+05:30').getTime();
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = examDate - now;
+
+    if (distance < 0) {
+      document.getElementById('countdown').innerHTML =
+        '<p style="font-size:1.2rem; color:var(--accent);">The examination date has passed. Wishing you success!</p>';
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ---------- PERSIST CHECKLIST STATE (localStorage) ----------
+  document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function (cb) {
+    const key = 'tnpsc_' + cb.id;
+
+    // Restore state
+    if (localStorage.getItem(key) === 'true') {
+      cb.checked = true;
+    }
+
+    // Save state on change
+    cb.addEventListener('change', function () {
+      localStorage.setItem(key, cb.checked);
+    });
+  });
+</script>
+</body>
+</html>

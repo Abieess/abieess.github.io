@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TNPSC Group IV — The Board of Directors</title>
+<style>
+  :root{
+    --paper:#F4E8D1; --ink:#3E2723; --ink-light:#6D4C41;
+    --accent:#8B5E3C; --gold:#C9A227; --border:#D7C4A1;
+    --card:#FBF5E9; --shadow:rgba(62,39,35,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background-color:var(--paper); color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif; line-height:1.7;
+    padding:1.5rem 1rem 3rem; min-height:100vh;
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(215,196,161,.35) 0%, transparent 55%),
+      radial-gradient(circle at 85% 75%, rgba(215,196,161,.25) 0%, transparent 55%),
+      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(62,39,35,.018) 3px, rgba(62,39,35,.018) 6px);
+  }
+  .container{max-width:1080px;margin:0 auto;}
+
+  /* ---------- HEADER ---------- */
+  header{text-align:center;margin-bottom:1.5rem;}
+  .ornament{color:var(--gold);letter-spacing:9px;font-size:1.1rem;}
+  h1{
+    font-size:clamp(1.9rem,5vw,3rem); letter-spacing:.5px;
+    border-bottom:3px double var(--accent); display:inline-block;
+    padding-bottom:.4rem; margin:.3rem 0;
+  }
+  .subtitle{font-style:italic;color:var(--ink-light);font-size:.98rem;}
+  .badge-row{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;align-items:center;}
+  .days-badge{
+    border:1px solid var(--accent); background:var(--card); padding:.35rem .9rem;
+    font-size:.85rem; letter-spacing:1px; text-transform:uppercase; color:var(--accent);
+  }
+  #goBtn{
+    font-family:Georgia,serif; font-weight:bold; font-size:1rem; letter-spacing:2px;
+    color:var(--accent); background:transparent; border:3px double var(--accent);
+    padding:.5rem 1.4rem; cursor:pointer; transform:rotate(-4deg);
+    transition:transform .2s ease, color .2s, border-color .2s; border-radius:3px;
+  }
+  #goBtn:hover{transform:rotate(0deg) scale(1.06); color:#8a1c1c; border-color:#8a1c1c;}
+  #goBtn.stamped{animation:stamp .45s ease;}
+  @keyframes stamp{
+    0%{transform:scale(1.5) rotate(-12deg);opacity:.2;}
+    60%{transform:scale(.92) rotate(-2deg);opacity:1;}
+    100%{transform:scale(1) rotate(-4deg);}
+  }
+  #goLine{
+    min-height:1.6rem; font-style:italic; color:var(--ink-light);
+    font-size:.9rem; margin-top:.6rem; text-align:center;
+  }
+
+  /* ---------- TAB BAR ---------- */
+  .tab-bar{
+    display:flex; gap:4px; overflow-x:auto; padding:0 2px;
+    border-bottom:2px solid var(--accent); margin-bottom:1.5rem;
+    position:sticky; top:0; background:var(--paper); z-index:20;
+    scrollbar-width:thin;
+  }
+  .tab-bar::-webkit-scrollbar{height:5px;}
+  .tab-bar::-webkit-scrollbar-thumb{background:var(--border);}
+  .tab-btn{
+    font-family:Georgia,serif; font-size:.82rem; letter-spacing:.6px;
+    background:#EADCC3; color:var(--ink-light); border:1px solid var(--border);
+    border-bottom:none; border-top:3px solid transparent;
+    padding:.55rem .85rem; cursor:pointer; white-space:nowrap;
+    border-radius:6px 6px 0 0; transition:background .2s,color .2s;
+  }
+  .tab-btn:hover{background:#F2E6D0; color:var(--ink);}
+  .tab-btn.active{
+    background:var(--card); color:var(--p,#8B5E3C);
+    border-top-color:var(--p,#8B5E3C); font-weight:bold;
+    box-shadow:0 -2px 6px rgba(62,39,35,.08);
+  }
+  .tab-btn:focus-visible{outline:2px dashed var(--accent); outline-offset:2px;}
+
+  /* ---------- PANELS ---------- */
+  .tab-panel{display:none; animation:fade .35s ease;}
+  .tab-panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  .persona-head{border-left:5px solid var(--p,#8B5E3C); padding-left:1rem; margin-bottom:1.2rem;}
+  .persona-head h2{
+    color:var(--p,#8B5E3C); font-size:1.5rem; letter-spacing:1px; margin-bottom:.15rem;
+  }
+  .persona-head .title-line{
+    font-size:.8rem; text-transform:uppercase; letter-spacing:2px; color:var(--ink-light);
+  }
+  blockquote.core{
+    background:#EFE3CC; border-left:4px solid var(--gold);
+    padding:.9rem 1.1rem; margin:1rem 0 1.4rem; font-style:italic;
+    font-size:1.02rem; color:var(--ink);
+  }
+
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1rem;margin-bottom:1rem;}
+  .info-card{
+    background:var(--card); border:1px solid var(--border);
+    border-left:3px solid var(--p,#8B5E3C); padding:1rem 1.1rem;
+    box-shadow:2px 2px 0 var(--shadow);
+  }
+  .info-card h3{
+    font-size:.95rem; text-transform:uppercase; letter-spacing:1.5px;
+    color:var(--p,#8B5E3C); margin-bottom:.45rem;
+  }
+  .info-card p, .info-card li{font-size:.9rem; color:var(--ink);}
+  .info-card ul{padding-left:1.1rem; margin-top:.3rem;}
+  .info-card li{margin-bottom:.3rem;}
+
+  .rules{margin-top:1.2rem;}
+  .rules h3{
+    font-size:.95rem; text-transform:uppercase; letter-spacing:2px;
+    color:var(--accent); border-bottom:1px dotted var(--border);
+    padding-bottom:.3rem; margin-bottom:.6rem;
+  }
+  .rules ol{padding-left:1.3rem; font-size:.92rem;}
+  .rules li{margin-bottom:.4rem;}
+  .trap{
+    margin-top:1.2rem; background:#F3E0D6; border:1px solid #D9B8A8;
+    padding:.8rem 1rem; font-size:.9rem;
+  }
+  .trap strong{color:#8a1c1c; letter-spacing:1px; font-size:.8rem; text-transform:uppercase;}
+
+  /* ---------- TABLE ---------- */
+  table{width:100%; border-collapse:collapse; margin:1rem 0; font-size:.85rem; background:var(--card);}
+  th,td{border:1px solid var(--border); padding:.55rem .7rem; text-align:left; vertical-align:top;}
+  th{background:#EADCC3; color:var(--ink); text-transform:uppercase; letter-spacing:1px; font-size:.72rem;}
+  tr:nth-child(even) td{background:#F7EEDD;}
+
+  .rule{border:none;border-top:1px solid var(--border);margin:1.5rem 0;position:relative;}
+  .rule::after{
+    content:'❦'; position:absolute; top:-.75rem; left:50%; transform:translateX(-50%);
+    background:var(--card); padding:0 .5rem; color:var(--gold); font-size:.85rem;
+  }
+
+  footer{text-align:center;font-size:.78rem;color:var(--ink-light);margin-top:2.5rem;font-style:italic;}
+  @media(max-width:600px){
+    body{padding:1rem .6rem 2rem;}
+    .tab-btn{font-size:.75rem;padding:.5rem .65rem;}
+    blockquote.core{font-size:.95rem;}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="ornament">✦ ✦ ✦</div>
+    <h1>TNPSC Group IV — The Board of Directors</h1>
+    <p class="subtitle">Seven thinking operating systems. One examination. Code 496.</p>
+    <div class="badge-row">
+      <span class="days-badge" id="daysBadge">Days left: --</span>
+      <button id="goBtn" aria-label="Launch motivation">GO</button>
+    </div>
+    <p id="goLine"></p>
+  </header>
+
+  <!-- TAB BAR -->
+  <nav class="tab-bar" role="tablist" aria-label="Thinking patterns">
+    <button class="tab-btn active" role="tab" aria-selected="true"  aria-controls="p-overview" data-tab="p-overview" style="--p:#8B5E3C">Overview</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="p-musk"     data-tab="p-musk"     style="--p:#2F4858">Musk</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="p-zuck"     data-tab="p-zuck"     style="--p:#3E5C4B">Zuckerberg</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="p-bezos"    data-tab="p-bezos"    style="--p:#7A5C1E">Bezos</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="p-science"  data-tab="p-science"  style="--p:#4A3B52">Feynman–Darwin</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="p-chess"    data-tab="p-chess"    style="--p:#6B3E2E">Chess GM</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="p-suntzu"   data-tab="p-suntzu"   style="--p:#3F3F2E">Sun Tzu</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="p-munger"   data-tab="p-munger"   style="--p:#5C3A21">Munger</button>
+    <button class="tab-btn" role="tab" aria-selected="false" aria-controls="p-board"    data-tab="p-board"    style="--p:#8a1c1c">The Board</button>
+  </nav>
+
+  <!-- ================= OVERVIEW ================= -->
+  <section class="tab-panel active" id="p-overview" role="tabpanel" style="--p:#8B5E3C">
+    <div class="persona-head">
+      <h2>Overview — The Seven Lenses</h2>
+      <p class="title-line">Read this first, then tour the tabs</p>
+    </div>
+    <p style="font-size:.95rem;">Each tab is a complete thinking system, not a motivational poster. Each one answers a different question about the same exam. Use them as <em>checks on one another</em>: when one system has a blind spot, another covers it.</p>
+    <table>
+      <thead>
+        <tr><th>Operating System</th><th>Core Question</th><th>Signature Weapon</th><th>Its Blind Spot</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>First Principles</strong> (Musk)</td><td>What is this made of, physically?</td><td>The 5-Step Algorithm</td><td>Deleting something it shouldn't</td></tr>
+        <tr><td><strong>Growth Hacking</strong> (Zuckerberg)</td><td>What's the metric and the loop?</td><td>Retention Dashboard</td><td>Vanity metrics</td></tr>
+        <tr><td><strong>Working Backwards</strong> (Bezos)</td><td>What does results day look like?</td><td>Reverse-Engineered Score Table</td><td>Over-planning Day 1</td></tr>
+        <tr><td><strong>Empirical Method</strong> (Feynman–Darwin)</td><td>What would falsify my knowledge?</td><td>Feynman Audit + Error Lab</td><td>Too slow if over-applied</td></tr>
+        <tr><td><strong>Pattern &amp; Tempo</strong> (Chess GM)</td><td>Where's the blunder and the clock?</td><td>Blunder Audit</td><td>Analysis paralysis</td></tr>
+        <tr><td><strong>Terrain &amp; Concentration</strong> (Sun Tzu)</td><td>Where is the decisive point?</td><td>Terrain Map</td><td>Siege warfare on low-yield topics</td></tr>
+        <tr><td><strong>Inversion &amp; Compounding</strong> (Munger)</td><td>How would I guarantee failure?</td><td>Inversion List</td><td>Activity bias</td></tr>
+      </tbody>
+    </table>
+    <div class="rules">
+      <h3>How to use this site</h3>
+      <ol>
+        <li>Read all seven tabs once (about 20 minutes) so the vocabulary installs.</li>
+        <li>Pick <strong>three</strong> to run daily — the Board tab recommends which.</li>
+        <li>Come back every Sunday, open the Board tab, and run the 10-minute board meeting.</li>
+        <li>When you feel lost, hit <strong>GO</strong> at the top and read the line.</li>
+      </ol>
+    </div>
+    <div class="trap"><strong>Ground Truth</strong> — 200 questions · 300 marks · 3 hours · no negative marking · Tamil is 150 marks with a qualifying threshold. Every thinking system below must obey this physics.</div>
+  </section>
+
+  <!-- ================= MUSK ================= -->
+  <section class="tab-panel" id="p-musk" role="tabpanel" style="--p:#2F4858">
+    <div class="persona-head">
+      <h2>Elon Musk — First Principles</h2>
+      <p class="title-line">Physics thinking · Deleting the unnecessary · Rapid iteration</p>
+    </div>
+    <blockquote class="core">"Boil the exam down to its irreducible physics. Everything else is a convention someone else accepted."</blockquote>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>The First-Principles Read</h3>
+        <p>300 marks ÷ 180 minutes = <strong>1.67 marks per minute</strong>. A one-mark question should cost you ~36 seconds. No negative marking means the expected value of every guess is positive — <strong>never leave a blank</strong>. Tamil is not "a section"; it is the battery pack. If the battery fails, the whole vehicle is stationary.</p>
+      </div>
+      <div class="info-card">
+        <h3>The 5-Step Algorithm (applied)</h3>
+        <ul>
+          <li><strong>Make requirements less dumb:</strong> read Code 496 itself, not a YouTuber's summary.</li>
+          <li><strong>Delete parts:</strong> cut 60% of your reference books. One textbook set, one guide, one PYQ compilation.</li>
+          <li><strong>Simplify:</strong> one page of notes per unit, no more.</li>
+          <li><strong>Accelerate cycle time:</strong> 25 minutes study → 5 minutes test → adjust.</li>
+          <li><strong>Automate:</strong> flashcards and spaced repetition for facts that refuse to stick.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>The Idiot Index</h3>
+        <p>Divide (money + hours spent on a resource) by (marks it actually delivers). Free Samacheer PDFs have the lowest idiot index in this entire exam. Expensive coaching with no PYQs has the highest. Recalculate every book on your shelf.</p>
+      </div>
+      <div class="info-card">
+        <h3>What He'd Delete</h3>
+        <ul>
+          <li>Beautiful colour-coded notes</li>
+          <li>Highlighting as a study method</li>
+          <li>Watching study vlogs instead of studying</li>
+          <li>Twelve books on the same topic</li>
+          <li>Perfecting Unit I Science (5 questions) while Tamil bleeds</li>
+        </ul>
+      </div>
+    </div>
+    <div class="rules">
+      <h3>His 5 Daily Rules</h3>
+      <ol>
+        <li>Question every "should" in your plan — who said you need that book?</li>
+        <li>Every 25 minutes, close the book and test yourself.</li>
+        <li>Measure marks-per-hour, not hours.</li>
+        <li>If a study method isn't producing test results, kill it in one week.</li>
+        <li>Failure is data. A bad mock is a sensor reading, not an identity.</li>
+      </ol>
+    </div>
+    <div class="trap"><strong>Trap</strong> — Optimizing a part that shouldn't exist. Perfecting low-yield trivia while the 150-mark Tamil section stays untouched is the study equivalent of making a rocket engine prettier instead of lighter.</div>
+  </section>
+
+  <!-- ================= ZUCKERBERG ================= -->
+  <section class="tab-panel" id="p-zuck" role="tabpanel" style="--p:#3E5C4B">
+    <div class="persona-head">
+      <h2>Mark Zuckerberg — Growth Hacking</h2>
+      <p class="title-line">Instrumentation · Feedback loops · Ship daily</p>
+    </div>
+    <blockquote class="core">"If you can't see the number, you can't improve the number. What gets measured gets hacked."</blockquote>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>The Retention Dashboard</h3>
+        <p>One page, six numbers, updated daily and reviewed Sunday:</p>
+        <ul>
+          <li>Questions attempted today</li>
+          <li>Accuracy % (per subject)</li>
+          <li>Average seconds per question</li>
+          <li>7-day retention % (re-test old topics)</li>
+          <li>Latest Tamil sectional score</li>
+          <li>Latest full-mock score</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>The Social Graph of Knowledge</h3>
+        <p>Facts are nodes; connections are edges. Every new fact must link to <strong>three</strong> existing ones. Article 21 connects to DPSP, to Supreme Court judgments, to TN local governance. Isolated facts decay; connected facts compound.</p>
+      </div>
+      <div class="info-card">
+        <h3>A/B Testing Your Methods</h3>
+        <p>Take one chapter. Study half by reading, half by active recall + questions. Re-test both after 7 days. <strong>Keep the winner, delete the loser.</strong> Stop guessing which method works — run the experiment.</p>
+      </div>
+      <div class="info-card">
+        <h3>"The Question Is the Algorithm"</h3>
+        <p>PYQs are the ranking algorithm of this exam. They tell you exactly what the examiner rewards. Don't study the syllabus as a book — study it as a feed that the question-setter up-ranks.</p>
+      </div>
+    </div>
+    <div class="rules">
+      <h3>His Operating Rhythm</h3>
+      <ol>
+        <li><strong>Ship daily:</strong> minimum 20 questions even on the worst day. No zero days.</li>
+        <li><strong>Fast feedback:</strong> never study a topic for more than 48 hours without testing it.</li>
+        <li><strong>Loop, don't line:</strong> mock → error log → targeted revision → mock.</li>
+        <li><strong>Public commitment:</strong> tell one person your weekly target. Accountability is a growth lever.</li>
+        <li><strong>Kill vanity metrics:</strong> hours studied is not a metric. Correct answers is.</li>
+      </ol>
+    </div>
+    <div class="trap"><strong>Trap</strong> — Stealth mode. Studying for weeks with no mock feedback is like shipping code with no analytics. You'll feel productive and learn nothing about what's broken.</div>
+  </section>
+
+  <!-- ================= BEZOS ================= -->
+  <section class="tab-panel" id="p-bezos" role="tabpanel" style="--p:#7A5C1E">
+    <div class="persona-head">
+      <h2>Jeff Bezos — Working Backwards</h2>
+      <p class="title-line">Start at the result · Small teams · The flywheel</p>
+    </div>
+    <blockquote class="core">"Write the press release from results day first. Then reverse-engineer every input that makes it true."</blockquote>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>The Fake Press Release</h3>
+        <p>"<em>On 10 January 2027, I cleared TNPSC Group IV with 240/300.</em>" Now work backwards: Tamil 135/150 · GS 80/112.5 · Aptitude 25/37.5 → questions correct per unit → topics required → daily output required. Every study session must trace back to a line in that release.</p>
+      </div>
+      <div class="info-card">
+        <h3>The Two-Pizza Rule</h3>
+        <p>Any task must be small enough for two people to finish over pizza. Not "finish Polity" — instead: "<strong>Articles 12–35 in 40 minutes, then 10 questions.</strong>" Small, shippable, verifiable.</p>
+      </div>
+      <div class="info-card">
+        <h3>Type 1 vs Type 2 Decisions</h3>
+        <ul>
+          <li><strong>Type 1 (irreversible):</strong> which books, which exam date, Tamil or no Tamil. Decide once, slowly, then stop.</li>
+          <li><strong>Type 2 (reversible):</strong> study order, daily timings, note format. Decide fast and change freely.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Single-Threaded Leadership</h3>
+        <p>One obsession per time block. When you study Polity, Polity is the only thing in the building. Multitasking is a meeting that never ends.</p>
+      </div>
+    </div>
+    <div class="rules">
+      <h3>His Flywheel</h3>
+      <ol>
+        <li>Better Tamil → confidence rises.</li>
+        <li>Confidence → more willing to sit GS sessions.</li>
+        <li>More GS → better mock scores.</li>
+        <li>Better mocks → sharper Tamil revision targets.</li>
+        <li>Loop repeats, each turn faster. Never break the wheel for a day.</li>
+      </ol>
+    </div>
+    <div class="trap"><strong>Trap</strong> — Day-1 optimization. Spending two weeks perfecting the study plan is procrastination wearing a business suit. Ship a rough plan and iterate.</div>
+  </section>
+
+  <!-- ================= FEYNMAN / DARWIN ================= -->
+  <section class="tab-panel" id="p-science" role="tabpanel" style="--p:#4A3B52">
+    <div class="persona-head">
+      <h2>Feynman + Darwin — The Empirical Method</h2>
+      <p class="title-line">Hypotheses · Falsification · The lab notebook</p>
+    </div>
+    <blockquote class="core">"You don't know it until you can explain it without notes. And the first rule of the notebook is: write down the fact that ruins your theory."</blockquote>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>The Feynman Audit</h3>
+        <p>After every unit: close the book, take a blank page, write everything you know in plain language as if teaching a 10-year-old. Then open the book and <strong>diff</strong> your page against it. The gaps are your real syllabus.</p>
+      </div>
+      <div class="info-card">
+        <h3>Darwin's Golden Rule</h3>
+        <p>Whenever a fact contradicts what you believed, record it immediately. Your <strong>Error Lab notebook</strong> is the most valuable book you own — every wrong answer is a confirmed falsification, which is far more informative than a right answer.</p>
+      </div>
+      <div class="info-card">
+        <h3>Controlled Experiments</h3>
+        <p>Study Chapter A with notes, Chapter B without. Test both after 7 days. Whichever retains better becomes your permanent method. Don't assume — measure.</p>
+      </div>
+      <div class="info-card">
+        <h3>Replication Schedule</h3>
+        <p>Recall the same material on <strong>Day 1, 2, 4, 7, 14</strong>. Science progresses by replication, not by one dramatic reading session.</p>
+      </div>
+    </div>
+    <div class="rules">
+      <h3>His Scientific Protocol</h3>
+      <ol>
+        <li>Spend <strong>70% of revision time on wrong answers</strong>, not on things you already know.</li>
+        <li>Teach one topic aloud every day — to a friend, a mirror, or a recorder.</li>
+        <li>Never mark a topic "done" without a closed-book brain dump.</li>
+        <li>Keep the Error Lab indexed by cause: didn't know · confused · misread · guessed.</li>
+        <li>Treat confidence as a hypothesis, not evidence.</li>
+      </ol>
+    </div>
+    <div class="trap"><strong>Trap</strong> — The illusion of fluency. Re-reading and highlighting create familiarity, which feels exactly like knowledge but is confirmation bias in disguise.</div>
+  </section>
+
+  <!-- ================= CHESS GM ================= -->
+  <section class="tab-panel" id="p-chess" role="tabpanel" style="--p:#6B3E2E">
+    <div class="persona-head">
+      <h2>The Chess Grandmaster — Pattern, Tempo, Prophylaxis</h2>
+      <p class="title-line">Opening · Middlegame · Endgame · Blunder audit</p>
+    </div>
+    <blockquote class="core">"The exam is 200 tactical positions. You lose not to brilliant moves by the examiner, but to your own blunders on the clock."</blockquote>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Three Phases of the Game</h3>
+        <ul>
+          <li><strong>Opening (Days 1–30):</strong> develop pieces — Tamil, Polity, TN History.</li>
+          <li><strong>Middlegame (31–55):</strong> tactics — PYQs, elimination, calculation.</li>
+          <li><strong>Endgame (56–80):</strong> precision — full mocks, time control, zero blunders.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Pattern Library</h3>
+        <p>200 questions are 200 recurring patterns. Every PYQ you solve adds a pattern. By Day 60 you should recognise question <em>shapes</em> — the "which is NOT" shape, the "match the following" shape, the date-trap shape.</p>
+      </div>
+      <div class="info-card">
+        <h3>Calculation &amp; Elimination</h3>
+        <p>In every MCQ, eliminate two options fast, then compare the remaining two on one specific detail. Never re-derive from scratch under time pressure.</p>
+      </div>
+      <div class="info-card">
+        <h3>Prophylaxis — Prevent Your Own Blunders</h3>
+        <ul>
+          <li>Read the stem twice; highlight <strong>NOT / EXCEPT / ONLY</strong>.</li>
+          <li>Check the unit asked (Tamil grammar questions love single-letter traps).</li>
+          <li>Never change an answer without a concrete reason.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="rules">
+      <h3>Tempo Rules</h3>
+      <ol>
+        <li>Average budget: <strong>54 seconds per question</strong>.</li>
+        <li>Bank time on easy questions; spend it on the 3–4 genuinely hard ones.</li>
+        <li>If a question exceeds 90 seconds, mark it and move — return later.</li>
+        <li>Practise every mock with a visible clock.</li>
+      </ol>
+    </div>
+    <div class="trap"><strong>Trap</strong> — Playing beautiful chess in your head. Perfect notes, deep understanding, zero timed practice. The clock is the opponent you're actually facing.</div>
+  </section>
+
+  <!-- ================= SUN TZU ================= -->
+  <section class="tab-panel" id="p-suntzu" role="tabpanel" style="--p:#3F3F2E">
+    <div class="persona-head">
+      <h2>Sun Tzu — Terrain and Concentration of Force</h2>
+      <p class="title-line">Know the ground · Win before fighting · Logistics</p>
+    </div>
+    <blockquote class="core">"The victorious strategist wins before the battle. The defeated one fights first and hopes to win later."</blockquote>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>The Terrain Map</h3>
+        <ul>
+          <li><strong>The fortified gate:</strong> Tamil, 150 marks with a qualifying threshold.</li>
+          <li><strong>The high ground:</strong> GS Units IV–VI — 55 of 75 questions.</li>
+          <li><strong>The open flank:</strong> Aptitude, 25 cheap marks with daily practice.</li>
+          <li><strong>The swamp:</strong> low-yield trivia and endless reference material.</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Concentration of Force</h3>
+        <p>Mass <strong>60–70% of GS effort</strong> at Units IV–VI. Do not spread evenly across six units like a thin line of soldiers. A concentrated attack wins; an even line is broken everywhere at once.</p>
+      </div>
+      <div class="info-card">
+        <h3>Win Before Fighting</h3>
+        <p>The exam is paperwork. The battle is preparation. By the time you sit in the hall, the outcome is largely already determined — by 80 days of logistics, not by adrenaline on the day.</p>
+      </div>
+      <div class="info-card">
+        <h3>The Five Factors</h3>
+        <ul>
+          <li><strong>Tao (purpose):</strong> why you're doing this — write it down.</li>
+          <li><strong>Heaven (timing):</strong> 80 days, fixed. Respect it.</li>
+          <li><strong>Earth (terrain):</strong> the syllabus and weightage.</li>
+          <li><strong>General (you):</strong> strengths and weaknesses, honestly assessed.</li>
+          <li><strong>Method (discipline):</strong> daily routine, mock schedule, revision calendar.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="rules">
+      <h3>Logistics Rules</h3>
+      <ol>
+        <li>Sleep is a weapon. Under-slept soldiers lose winnable battles.</li>
+        <li>Practise OMR shading — 200 bubbles on paper, not in theory.</li>
+        <li>Protect your eyes: 20-20-20 rule during long reading sessions.</li>
+        <li>Eat and hydrate before every mock as you would before the real exam.</li>
+        <li>Never fight on all fronts at once.</li>
+      </ol>
+    </div>
+    <div class="trap"><strong>Trap</strong> — Siege warfare. Spending three days on one difficult, low-yield topic because of ego. The strategist abandons a fortress that costs more than it yields.</div>
+  </section>
+
+  <!-- ================= MUNGER ================= -->
+  <section class="tab-panel" id="p-munger" role="tabpanel" style="--p:#5C3A21">
+    <div class="persona-head">
+      <h2>Munger &amp; Buffett — Inversion and Compounding</h2>
+      <p class="title-line">Margin of safety · Opportunity cost · Circle of competence</p>
+    </div>
+    <blockquote class="core">"Invert, always invert. Ask how you would guarantee failure — then simply avoid that list."</blockquote>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>The Inversion List (print it)</h3>
+        <ol>
+          <li>Skip Tamil because "I already speak it."</li>
+          <li>Change books every two weeks.</li>
+          <li>Never take a full mock.</li>
+          <li>Study only what you already enjoy.</li>
+          <li>Leave blanks because of fear.</li>
+          <li>Read without solving questions.</li>
+          <li>Ignore current affairs.</li>
+          <li>Cram new topics in the final week.</li>
+          <li>Study by hours, not by output.</li>
+          <li>Study alone with no feedback.</li>
+        </ol>
+      </div>
+      <div class="info-card">
+        <h3>Margin of Safety</h3>
+        <p>The Tamil threshold is 40%. Aim for <strong>80%</strong>. The extra 40% is a buffer that absorbs a bad paper, a bad night, a bad question set. Never aim for the minimum in a subject that can disqualify you.</p>
+      </div>
+      <div class="info-card">
+        <h3>Opportunity Cost Ledger</h3>
+        <p>Every hour spent on Unit I Science (5 questions) is an hour not spent on Unit V Economy (20 questions). Write the ledger weekly. Which hour produced the most marks?</p>
+      </div>
+      <div class="info-card">
+        <h3>Compounding</h3>
+        <p>30 questions a day × 80 days = <strong>2,400 questions</strong>. Knowledge compounds like interest — slowly at first, then steeply. The mistake is quitting at Day 20 when the curve still looks flat.</p>
+      </div>
+    </div>
+    <div class="rules">
+      <h3>His Checklist Discipline</h3>
+      <ol>
+        <li>Circle of competence: mark every topic as known / shaky / unknown. Expand deliberately, don't drift.</li>
+        <li>Use the same pre-mock checklist every single time.</li>
+        <li>Most decisions are "no" — most study materials are also "no."</li>
+        <li>Be patient with the plan, ruthless with the execution.</li>
+      </ol>
+    </div>
+    <div class="trap"><strong>Trap</strong> — Activity bias and "diworsification." Doing something feels productive even when it's wrong; collecting fifteen sources feels like progress while none of them are finished.</div>
+  </section>
+
+  <!-- ================= BOARD ================= -->
+  <section class="tab-panel" id="p-board" role="tabpanel" style="--p:#8a1c1c">
+    <div class="persona-head">
+      <h2>The Board of Directors — The Synthesis</h2>
+      <p class="title-line">Who you consult, and when</p>
+    </div>
+    <blockquote class="core">"No single model is enough. Hire all seven, give each a portfolio, and let them argue."</blockquote>
+
+    <table>
+      <thead><tr><th>Phase / Cadence</th><th>Board Member in Charge</th><th>The Job</th></tr></thead>
+      <tbody>
+        <tr><td>Days 1–30</td><td>Bezos + Sun Tzu</td><td>Working-backwards score table; terrain map of 200 questions</td></tr>
+        <tr><td>Every study block</td><td>Musk</td><td>25 minutes study → 5 minutes test → delete what didn't work</td></tr>
+        <tr><td>End of every unit</td><td>Feynman</td><td>Blank-page brain dump and diff against the book</td></tr>
+        <tr><td>Every day (before bed)</td><td>Zuckerberg</td><td>Log six metrics on the dashboard</td></tr>
+        <tr><td>Every Sunday</td><td>Chess GM + Munger</td><td>Blunder audit of the week's errors; inversion checklist</td></tr>
+        <tr><td>Days 56–80</td><td>Chess GM + Sun Tzu</td><td>Full mocks under real time; logistics and sleep discipline</td></tr>
+        <tr><td>Before any book purchase</td><td>Musk + Munger</td><td>Idiot Index check; opportunity cost check</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rules">
+      <h3>The 10-Minute Daily Board Meeting</h3>
+      <ol>
+        <li><strong>Musk:</strong> What did I delete today?</li>
+        <li><strong>Zuckerberg:</strong> What did the numbers say?</li>
+        <li><strong>Feynman:</strong> What did I discover I didn't know?</li>
+        <li><strong>Chess GM:</strong> What blunder will I prevent tomorrow?</li>
+        <li><strong>Sun Tzu:</strong> Where is my force concentrated tomorrow?</li>
+        <li><strong>Munger:</strong> Am I on the failure list anywhere?</li>
+        <li><strong>Bezos:</strong> Does tomorrow trace back to the press release?</li>
+      </ol>
+    </div>
+
+    <div class="trap"><strong>Final Word</strong> — The exam is won by a system, not by a mood. Moods fluctuate; systems produce. Build the board, meet daily, and let the system carry you on the days you don't feel like it.</div>
+  </section>
+
+  <footer>
+    Prepared for TNPSC Group IV · Code 496 · Examination date 10 January 2027. "One exam. Seven minds. Choose the board, not the mood."
+  </footer>
+</div>
+
+<script>
+  /* ---------- TAB SWITCHING ---------- */
+  const tabs   = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  function activate(tab) {
+    tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+    panels.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected','true');
+    const panel = document.getElementById(tab.dataset.tab);
+    panel.classList.add('active');
+    panel.focus?.();
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => activate(tab));
+    tab.addEventListener('keydown', e => {
+      const i = [...tabs].indexOf(tab);
+      if (e.key === 'ArrowRight') { e.preventDefault(); tabs[(i+1)%tabs.length].focus(); tabs[(i+1)%tabs.length].click(); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); tabs[(i-1+tabs.length)%tabs.length].focus(); tabs[(i-1+tabs.length)%tabs.length].click(); }
+    });
+  });
+
+  /* ---------- COUNTDOWN BADGE ---------- */
+  const examDate = new Date('2027-01-10T09:30:00+05:30').getTime();
+  function tick() {
+    const d = examDate - Date.now();
+    const badge = document.getElementById('daysBadge');
+    if (d <= 0) { badge.textContent = 'Exam day has arrived'; return; }
+    const days = Math.floor(d / 86400000);
+    badge.textContent = 'Days left: ' + days;
+  }
+  tick(); setInterval(tick, 60000);
+
+  /* ---------- GO BUTTON ---------- */
+  const goLines = [
+    'Day 1 is today. Tamil first, everything else second.',
+    'Delete one thing from your plan before you add anything.',
+    'The exam is 200 questions. You only need 3 hours of focus — but 80 days of preparation.',
+    'Write the results-day press release. Then go earn it.',
+    'You cannot cram 150 marks of Tamil in the last week. You can start today.',
+    'One mock is worth ten hours of re-reading.',
+    'Invert: how would you fail? Now don\'t do that.',
+    'Concentration of force: 55 of 75 GS questions live in Units IV, V and VI.',
+    'No negative marking. Never leave a bubble empty.',
+    'The clock is the opponent. Practise with it visible.',
+    'Your error notebook is more valuable than your notes.',
+    'Systems beat moods. Run the board meeting.'
+  ];
+  const goBtn  = document.getElementById('goBtn');
+  const goLine = document.getElementById('goLine');
+  let last = -1;
+  goBtn.addEventListener('click', () => {
+    let i;
+    do { i = Math.floor(Math.random() * goLines.length); } while (i === last && goLines.length > 1);
+    last = i;
+    goLine.textContent = goLines[i];
+    goBtn.classList.remove('stamped');
+    void goBtn.offsetWidth;        // restart animation
+    goBtn.classList.add('stamped');
+  });
+</script>
+</body>
+</html>
