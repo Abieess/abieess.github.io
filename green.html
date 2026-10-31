@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Discipline Protocol — Until 10 Jan 2027</title>
+<style>
+  :root{
+    --bg:#E7ECE8;
+    --surface:#FFFFFF;
+    --surface-2:#F4F7F4;
+    --ink:#24302A;
+    --muted:#6E7B74;
+    --green-deep:#1E3A2B;
+    --green:#3F6B4F;
+    --green-bright:#5A9E72;
+    --green-soft:#D7E5DC;
+    --green-pale:#EEF4F0;
+    --grey:#8A9590;
+    --grey-soft:#DCE2DE;
+    --line:#CBD5CF;
+    --amber:#B5793C;
+    --amber-soft:#F3E6D6;
+    --danger:#9C4A3A;
+    --shadow:rgba(30,58,43,.10);
+    --radius:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:70px;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Georgia','Times New Roman',serif;
+    line-height:1.65;
+    padding-bottom:3rem;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(90,158,114,.10) 0%, transparent 45%),
+      radial-gradient(circle at 88% 92%, rgba(30,58,43,.08) 0%, transparent 45%);
+    min-height:100vh;
+  }
+  .container{max-width:1060px;margin:0 auto;padding:0 1rem;}
+
+  /* ---------- HEADER ---------- */
+  header{
+    background:linear-gradient(160deg,var(--green-deep) 0%, #2A4A38 60%, #355540 100%);
+    color:#EAF2EC;
+    padding:2.2rem 1rem 1.8rem;
+    text-align:center;
+    border-bottom:4px solid var(--green-bright);
+  }
+  header h1{
+    font-size:clamp(1.7rem,4.5vw,2.6rem);
+    letter-spacing:1px;
+    margin-bottom:.3rem;
+  }
+  header .sub{
+    color:#B9CFC1;
+    font-style:italic;
+    font-size:.95rem;
+  }
+  .topline{
+    display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;
+    margin-top:1.1rem;
+  }
+  .pill{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.2);
+    color:#EAF2EC;
+    padding:.35rem .9rem;
+    border-radius:999px;
+    font-size:.82rem;
+    letter-spacing:.5px;
+    font-family:inherit;
+  }
+  .pill strong{color:#8FD3A3;font-weight:bold;}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(231,236,232,.96);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1060px;margin:0 auto;padding:.5rem 1rem;
+    display:flex;gap:.35rem;overflow-x:auto;
+    scrollbar-width:thin;
+  }
+  .nav-inner::-webkit-scrollbar{height:4px;}
+  .nav-inner::-webkit-scrollbar-thumb{background:var(--line);border-radius:2px;}
+  nav a{
+    color:var(--green-deep);
+    text-decoration:none;
+    font-size:.82rem;
+    letter-spacing:.5px;
+    padding:.4rem .7rem;
+    border-radius:6px;
+    white-space:nowrap;
+    border:1px solid transparent;
+    transition:background .2s,border-color .2s;
+    font-family:inherit;
+  }
+  nav a:hover{background:var(--green-soft);border-color:var(--line);}
+
+  /* ---------- SECTIONS ---------- */
+  section{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:1.6rem;
+    margin-top:1.6rem;
+    box-shadow:0 2px 0 var(--shadow);
+  }
+  section h2{
+    font-size:1.15rem;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color:var(--green);
+    border-bottom:1px solid var(--line);
+    padding-bottom:.5rem;
+    margin-bottom:1.1rem;
+    display:flex;align-items:center;gap:.6rem;
+  }
+  section h2 .num{
+    background:var(--green-deep);
+    color:#EAF2EC;
+    width:28px;height:28px;
+    border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:.82rem;letter-spacing:0;
+  }
+  p.lead{font-size:.95rem;color:var(--muted);margin-bottom:1rem;}
+
+  /* ---------- CONTRACT ---------- */
+  .contract{
+    background:var(--green-pale);
+    border:1px dashed var(--green);
+    border-radius:8px;
+    padding:1.4rem;
+    font-size:.95rem;
+    position:relative;
+  }
+  .contract ol{padding-left:1.3rem;margin:.6rem 0;}
+  .contract li{margin-bottom:.4rem;}
+  .sign-row{
+    display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;
+    margin-top:1.1rem;
+    padding-top:1rem;
+    border-top:1px dotted var(--line);
+  }
+  .sign-row input{
+    flex:1;min-width:180px;
+    font-family:inherit;font-size:1rem;
+    padding:.55rem .8rem;
+    border:1px solid var(--line);
+    border-radius:6px;
+    background:var(--surface);
+    color:var(--ink);
+  }
+  .sign-row input:focus{outline:2px solid var(--green-bright);outline-offset:1px;}
+  button.primary{
+    font-family:inherit;font-size:.95rem;font-weight:bold;letter-spacing:1px;
+    background:var(--green-deep);color:#EAF2EC;
+    border:none;border-radius:6px;
+    padding:.6rem 1.3rem;cursor:pointer;
+    transition:background .2s,transform .1s;
+  }
+  button.primary:hover{background:var(--green);}
+  button.primary:active{transform:scale(.97);}
+  .stamp{
+    display:none;
+    margin-top:1.2rem;
+    border:3px double var(--green);
+    color:var(--green);
+    padding:.8rem 1rem;
+    border-radius:6px;
+    font-size:.95rem;
+    text-align:center;
+    transform:rotate(-1.5deg);
+    background:#fff;
+  }
+  .stamp.show{display:block;animation:stampIn .4s ease;}
+  @keyframes stampIn{from{transform:scale(1.15) rotate(-6deg);opacity:0;}to{transform:scale(1) rotate(-1.5deg);opacity:1;}}
+  .stamp strong{color:var(--green-deep);font-size:1.05rem;}
+
+  /* ---------- AVOID GRID ---------- */
+  .avoid-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:.9rem;
+  }
+  .avoid-card{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-left:4px solid var(--green-bright);
+    border-radius:6px;
+    padding:.9rem 1rem;
+    font-size:.88rem;
+  }
+  .avoid-card h3{
+    font-size:.95rem;color:var(--green-deep);
+    margin-bottom:.25rem;
+    display:flex;justify-content:space-between;align-items:baseline;
+  }
+  .avoid-card h3 .idx{
+    font-size:.72rem;color:var(--grey);letter-spacing:1px;
+  }
+  .avoid-card .label{
+    font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;
+    color:var(--grey);margin-top:.5rem;
+  }
+  .avoid-card .replace{
+    color:var(--green);font-weight:bold;
+  }
+
+  /* ---------- STREAK ---------- */
+  .streak-board{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem;
+    align-items:stretch;
+  }
+  @media(max-width:640px){.streak-board{grid-template-columns:1fr;}}
+  .streak-big{
+    background:var(--green-deep);
+    color:#EAF2EC;
+    border-radius:8px;
+    padding:1.4rem;
+    text-align:center;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .streak-big .num{
+    font-size:4rem;font-weight:bold;line-height:1;color:#8FD3A3;
+    font-family:'Georgia',serif;
+  }
+  .streak-big .lbl{
+    font-size:.75rem;text-transform:uppercase;letter-spacing:2px;color:#B9CFC1;
+    margin-top:.3rem;
+  }
+  .streak-big .since{font-size:.78rem;color:#9AB8A6;margin-top:.6rem;}
+  .streak-side{display:flex;flex-direction:column;gap:.8rem;}
+  .progress-wrap{background:var(--grey-soft);border-radius:999px;height:14px;overflow:hidden;}
+  .progress-fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg,var(--green-bright),var(--green));
+    transition:width .6s ease;
+  }
+  .progress-meta{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);}
+  .btn-relapse{
+    font-family:inherit;font-size:.85rem;
+    background:transparent;color:var(--danger);
+    border:1px solid var(--danger);border-radius:6px;
+    padding:.5rem .9rem;cursor:pointer;
+    align-self:flex-start;
+  }
+  .btn-relapse:hover{background:var(--danger);color:#fff;}
+
+  /* ---------- DAILY RULES ---------- */
+  .rules-list{list-style:none;}
+  .rules-list li{
+    display:flex;align-items:flex-start;gap:.65rem;
+    padding:.55rem 0;
+    border-bottom:1px dotted var(--line);
+    font-size:.92rem;
+  }
+  .rules-list li:last-child{border-bottom:none;}
+  .rules-list input[type=checkbox]{
+    appearance:none;-webkit-appearance:none;
+    width:18px;height:18px;flex-shrink:0;margin-top:4px;
+    border:2px solid var(--green);border-radius:4px;
+    background:var(--surface);cursor:pointer;position:relative;
+  }
+  .rules-list input[type=checkbox]:checked{background:var(--green);}
+  .rules-list input[type=checkbox]:checked::after{
+    content:'✓';position:absolute;top:-3px;left:2px;
+    color:#fff;font-size:14px;font-weight:bold;
+  }
+  .rules-list label{cursor:pointer;}
+  .rules-list input:checked + label{color:var(--muted);text-decoration:line-through;}
+  .rules-count{
+    margin-top:.8rem;font-size:.82rem;color:var(--muted);text-align:right;
+  }
+  .rules-count strong{color:var(--green);}
+
+  /* ---------- SOS ---------- */
+  .sos-banner{
+    background:linear-gradient(120deg,var(--amber-soft),#F8EFE0);
+    border:1px solid #E0C9A8;
+    border-radius:8px;
+    padding:1.3rem;
+    display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+  }
+  .sos-banner p{font-size:.92rem;color:#5C4629;max-width:520px;}
+  .btn-sos{
+    font-family:inherit;font-weight:bold;font-size:1rem;letter-spacing:1.5px;
+    background:var(--amber);color:#fff;border:none;border-radius:8px;
+    padding:.8rem 1.6rem;cursor:pointer;
+    box-shadow:0 3px 0 #8E5C28;
+    transition:transform .1s,box-shadow .1s;
+  }
+  .btn-sos:active{transform:translateY(3px);box-shadow:0 0 0 #8E5C28;}
+
+  .sos-steps{counter-reset:s;margin-top:1.2rem;}
+  .sos-steps li{
+    counter-increment:s;
+    list-style:none;
+    padding:.6rem 0 .6rem 2.2rem;
+    position:relative;
+    font-size:.92rem;
+    border-bottom:1px dotted var(--line);
+  }
+  .sos-steps li:last-child{border-bottom:none;}
+  .sos-steps li::before{
+    content:counter(s);
+    position:absolute;left:0;top:.55rem;
+    width:24px;height:24px;border-radius:50%;
+    background:var(--green-soft);color:var(--green-deep);
+    display:flex;align-items:center;justify-content:center;
+    font-size:.78rem;font-weight:bold;
+  }
+  .sos-steps strong{color:var(--green-deep);}
+
+  /* ---------- MODAL ---------- */
+  .modal-overlay{
+    display:none;
+    position:fixed;inset:0;z-index:100;
+    background:rgba(20,35,27,.82);
+    backdrop-filter:blur(3px);
+    align-items:center;justify-content:center;
+    padding:1rem;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--surface);
+    border-radius:14px;
+    max-width:460px;width:100%;
+    padding:1.8rem 1.4rem;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.4);
+    animation:pop .3s ease;
+  }
+  @keyframes pop{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
+  .modal h3{color:var(--green-deep);font-size:1.15rem;letter-spacing:1px;margin-bottom:.3rem;}
+  .modal .sub{color:var(--muted);font-size:.85rem;margin-bottom:1.2rem;}
+  .breath-circle{
+    width:150px;height:150px;border-radius:50%;
+    margin:0 auto 1.2rem;
+    background:radial-gradient(circle at 40% 40%,var(--green-bright),var(--green-deep));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:.9rem;letter-spacing:1px;
+    transition:transform 4s ease-in-out;
+    transform:scale(.7);
+    box-shadow:0 0 0 8px rgba(90,158,114,.15);
+  }
+  .modal .phase{font-size:1.1rem;font-weight:bold;color:var(--green);min-height:1.6rem;}
+  .modal .cycle{font-size:.8rem;color:var(--muted);margin-top:.3rem;}
+  .modal .close{
+    margin-top:1.2rem;
+    background:transparent;border:1px solid var(--line);
+    color:var(--muted);border-radius:6px;
+    padding:.5rem 1.2rem;cursor:pointer;font-family:inherit;font-size:.85rem;
+  }
+  .modal .close:hover{background:var(--surface-2);}
+
+  /* ---------- RELAPSE ---------- */
+  .relapse-box{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-left:4px solid var(--danger);
+    border-radius:6px;
+    padding:1.1rem;
+  }
+  .relapse-box h3{color:var(--danger);font-size:.95rem;letter-spacing:1px;margin-bottom:.5rem;text-transform:uppercase;}
+  .relapse-box ol{padding-left:1.2rem;font-size:.9rem;}
+  .relapse-box li{margin-bottom:.35rem;}
+  .no-shame{
+    background:var(--green-pale);
+    border:1px dashed var(--green);
+    border-radius:6px;
+    padding:.9rem 1rem;
+    font-size:.9rem;
+    margin-top:.9rem;
+    color:var(--green-deep);
+  }
+
+  /* ---------- ENV TABLE ---------- */
+  table{width:100%;border-collapse:collapse;font-size:.87rem;background:var(--surface);}
+  th,td{border:1px solid var(--line);padding:.6rem .75rem;text-align:left;vertical-align:top;}
+  th{background:var(--green-soft);color:var(--green-deep);font-size:.72rem;text-transform:uppercase;letter-spacing:1.5px;}
+  tr:nth-child(even) td{background:var(--surface-2);}
+
+  footer{
+    text-align:center;font-size:.8rem;color:var(--muted);
+    margin-top:2.5rem;font-style:italic;
+  }
+
+  @media(max-width:600px){
+    section{padding:1.1rem;}
+    .streak-big .num{font-size:3rem;}
+    header{padding:1.6rem 1rem 1.4rem;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>The Discipline Protocol</h1>
+  <p class="sub">A binding contract with yourself · Until 10 January 2027</p>
+  <div class="topline">
+    <span class="pill">Days remaining: <strong id="daysLeft">--</strong></span>
+    <span class="pill">Clean streak: <strong id="streakMini">0</strong></span>
+    <span class="pill">Today's rules: <strong id="rulesMini">0/10</strong></span>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#contract">01 · Contract</a>
+    <a href="#avoid">02 · The Avoid List</a>
+    <a href="#streak">03 · Streak Board</a>
+    <a href="#sos">04 · SOS Protocol</a>
+    <a href="#relapse">05 · Relapse Rule</a>
+    <a href="#environment">06 · Environment</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- ============ CONTRACT ============ -->
+  <section id="contract">
+    <h2><span class="num">01</span> The Contract</h2>
+    <p class="lead">Read it once, slowly. Then sign it. The signature is stored on this device and stays until you reset it.</p>
+    <div class="contract">
+      <p><strong>I, the undersigned, commit to the following until 10 January 2027:</strong></p>
+      <ol>
+        <li>I will not watch pornography or engage in compulsive sexual behaviour (no PMO).</li>
+        <li>I will not lose hours to short-form video, infinite scroll, or late-night phone use.</li>
+        <li>I will keep my phone out of my bedroom overnight and out of my study space during sessions.</li>
+        <li>I will not use social media as an escape hatch when study feels hard.</li>
+        <li>I will treat urges as signals, not commands — and run the SOS protocol instead of negotiating.</li>
+        <li>I will not let a single relapse become a lifestyle. I will reset and continue the same day.</li>
+        <li>I will protect my sleep, my body, and my attention as the assets that win this exam.</li>
+      </ol>
+      <div class="sign-row">
+        <input id="nameInput" type="text" placeholder="Type your full name" maxlength="40" autocomplete="off">
+        <button class="primary" id="signBtn">Sign &amp; Seal</button>
+      </div>
+      <div class="stamp" id="stamp"></div>
+    </div>
+  </section>
+
+  <!-- ============ AVOID LIST ============ -->
+  <section id="avoid">
+    <h2><span class="num">02</span> The Avoid List</h2>
+    <p class="lead">Each trap below comes with the reason it works on you, and the replacement that takes its place. Removal alone fails — you need a substitute, or the void refills.</p>
+    <div class="avoid-grid" id="avoidGrid"></div>
+  </section>
+
+  <!-- ============ STREAK ============ -->
+  <section id="streak">
+    <h2><span class="num">03</span> The Streak Board</h2>
+    <p class="lead">One number matters: how many consecutive days you have kept every rule. It resets only when <em>you</em> press the reset — never automatically.</p>
+    <div class="streak-board">
+      <div class="streak-big">
+        <div class="num" id="streakNum">0</div>
+        <div class="lbl">Days Clean</div>
+        <div class="since" id="sinceText">Started today</div>
+      </div>
+      <div class="streak-side">
+        <div>
+          <div class="progress-meta"><span>Progress to 10 Jan 2027</span><span id="progressPct">0%</span></div>
+          <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+        <div>
+          <div class="progress-meta"><span>Longest streak</span><span id="bestStreak">0 days</span></div>
+        </div>
+        <button class="btn-relapse" id="relapseBtn">I slipped — reset honestly</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DAILY RULES ============ -->
+  <section id="daily">
+    <h2><span class="num">03b</span> Today's Non-Negotiables</h2>
+    <p class="lead">Ten checkboxes. They reset every midnight — because discipline is a daily decision, not a one-time event.</p>
+    <ul class="rules-list" id="rulesList"></ul>
+    <div class="rules-count">Completed today: <strong id="rulesDone">0</strong> / 10</div>
+  </section>
+
+  <!-- ============ SOS ============ -->
+  <section id="sos">
+    <h2><span class="num">04</span> SOS — When the Urge Hits</h2>
+    <div class="sos-banner">
+      <p><strong>Do not negotiate with the urge.</strong> Negotiation is how it wins. Press the button, follow the 90-second protocol, and let the wave pass. Urges peak in 10–15 minutes and always fall.</p>
+      <button class="btn-sos" id="sosBtn">SOS · BREATHE NOW</button>
+    </div>
+    <ol class="sos-steps">
+      <li><strong>STOP.</strong> Put the phone face-down across the room. Physically move away from the trigger.</li>
+      <li><strong>BREATHE.</strong> Box breathing — inhale 4s, hold 4s, exhale 4s, hold 4s. Four rounds.</li>
+      <li><strong>NAME IT.</strong> Say out loud: "This is an urge. It is not me. It will pass."</li>
+      <li><strong>MOVE.</strong> 20 push-ups, a cold wash, or a 5-minute walk. Change the physical state.</li>
+      <li><strong>DELAY 20 MINUTES.</strong> If the urge returns after 20 minutes, run the protocol again. It will weaken each round.</li>
+      <li><strong>REDIRECT.</strong> Open Tamil or aptitude questions. Give your brain a real task — idle brains relapse.</li>
+    </ol>
+  </section>
+
+  <!-- ============ RELAPSE ============ -->
+  <section id="relapse">
+    <h2><span class="num">05</span> The Relapse Rule</h2>
+    <div class="relapse-box">
+      <h3>If you slip, follow this — exactly</h3>
+      <ol>
+        <li>Close the tab, put the phone down, and step away for 60 seconds.</li>
+        <li>Do <strong>not</strong> binge to "finish the streak properly." That is the chaser effect, and it is a lie.</li>
+        <li>Reset the counter. Write one sentence in a notebook: <em>what triggered it, what you'll change tomorrow</em>.</li>
+        <li>Run the SOS protocol once more, immediately. Do not wait for the next urge.</li>
+        <li>Return to study the same day. Not tomorrow. Today.</li>
+      </ol>
+    </div>
+    <div class="no-shame">
+      <strong>No shame clause.</strong> A relapse is a data point, not an identity. The people who succeed are not the ones who never slip — they are the ones whose slips last hours instead of weeks. The exam is in January. You are allowed many resets; you are not allowed to quit.
+    </div>
+  </section>
+
+  <!-- ============ ENVIRONMENT ============ -->
+  <section id="environment">
+    <h2><span class="num">06</span> Environment Design</h2>
+    <p class="lead">Willpower is overrated. Every rule below removes a decision you shouldn't have to make.</p>
+    <table>
+      <thead><tr><th>Trigger</th><th>The Friction You Add</th></tr></thead>
+      <tbody>
+        <tr><td>Phone in bedroom</td><td>Charge it in another room. Use a ₹300 alarm clock. Non-negotiable.</td></tr>
+        <tr><td>Social media apps</td><td>Log out on every device. Delete the apps from the phone, use browser only.</td></tr>
+        <tr><td>Porn access</td><td>Enable DNS filtering (1.1.1.1 for Families or NextDNS). Delete private browsing. Tell one accountability person.</td></tr>
+        <tr><td>Late-night urges</td><td>Sleep by 11 PM. Tired brains relapse. Sleep is a discipline tool.</td></tr>
+        <tr><td>Boredom during study</td><td>Keep a 5-minute "redirect list" on your desk: push-ups, walk, glass of water, 10 questions.</td></tr>
+        <tr><td>YouTube / Reels rabbit hole</td><td>Turn off autoplay. Set app timers (30 min/day max). Use a separate browser profile for study only.</td></tr>
+        <tr><td>Isolation</td><td>Tell one person your streak. A streak witnessed is a streak protected.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <footer>
+    Signed under the green light · Until 10 January 2027 · The exam is won by the person who can sit still.
+  </footer>
+</div>
+
+<!-- ============ SOS MODAL ============ -->
+<div class="modal-overlay" id="sosModal" role="dialog" aria-modal="true" aria-labelledby="sosTitle">
+  <div class="modal">
+    <h3 id="sosTitle">Box Breathing</h3>
+    <p class="sub">4 seconds in · 4 hold · 4 out · 4 hold — four cycles</p>
+    <div class="breath-circle" id="breathCircle">breathe</div>
+    <div class="phase" id="phaseText">Get ready…</div>
+    <div class="cycle" id="cycleText"></div>
+    <button class="close" id="closeModal">Close · I'm okay</button>
+  </div>
+</div>
+
+<script>
+  /* ============================================================
+     CONFIG
+  ============================================================ */
+  const EXAM_DATE = new Date('2027-01-10T09:30:00+05:30');
+  const LS = {
+    start:   'dp_start',
+    best:    'dp_best',
+    relapses:'dp_relapses',
+    name:    'dp_name',
+    daily:   'dp_daily_'
+  };
+
+  /* ============================================================
+     THE AVOID LIST
+  ============================================================ */
+  const avoidItems = [
+    { t:'Pornography / PMO', why:'Dopamine spike 5–10× natural reward. Flattens motivation, wrecks focus, and the chaser effect pulls you deeper. It is the single biggest threat to a study streak.', replace:'When the urge hits: push-ups, cold water, walk, or open Tamil grammar.' },
+    { t:'Short-form video (Reels, Shorts, TikTok)', why:'Designed to defeat your prefrontal cortex. Each scroll is a variable-ratio reward — the same mechanism as a slot machine.', replace:'If you must watch, use one 20-min block per day, phone timer on, no autoplay.' },
+    { t:'Phone in the bedroom', why:'Late-night phone use costs you sleep, and sleep loss is the #1 predictor of next-day relapse.', replace:'Charge it outside the bedroom. Buy a cheap alarm clock today.' },
+    { t:'Doomscrolling news / X / Twitter', why:'Feels like staying informed; is actually anxiety laundering. Zero exam value, high attention cost.', replace:'One 10-minute news check at lunch. Tamil Nadu and current affairs only.' },
+    { t:'Infinite scroll on Instagram / Facebook', why:'You didn\'t open it to relax — you opened it to escape. The escape is the problem.', replace:'Delete apps. Browser-only, logged out. Check once, at a fixed time.' },
+    { t:'Junk food / sugar binges', why:'Blood-sugar crashes destroy 2-hour study blocks. You feel tired and reach for the phone.', replace:'Nuts, fruit, water. Eat before you\'re hungry — not after you\'re shaky.' },
+    { t:'Alcohol and late-night parties', why:'Every "just this once" night costs the next two days of focus. In an 80-day sprint, that maths never works.', replace:'Zero till January. Say "I\'m on a deadline" and mean it.' },
+    { t:'Gaming as escape', why:'Gaming is fine in moderation; using it to avoid study is the same trap as porn — dopamine without effort.', replace:'Strict rule: no gaming on study days. Reward it after a full mock.' },
+    { t:'Negotiating with urges', why:'The moment you start bargaining ("just 5 minutes"), you have already lost. The urge will always win a debate.', replace:'The SOS button. No debate. Breath first, decide after.' },
+    { t:'Shame spirals after a slip', why:'Shame is the #1 trigger for the next relapse. It feels like accountability but is actually self-sabotage.', replace:'Reset. One sentence in the notebook. Back to study today. No commentary.' }
+  ];
+
+  const dailyRules = [
+    'Phone out of bedroom overnight',
+    'No porn / no PMO',
+    'No social media before 12 noon',
+    'No short-form video today',
+    '20+ practice questions done',
+    '30+ min Tamil study',
+    '30+ min physical movement',
+    'Sleep by 11 PM',
+    '10 pages of a real book',
+    '5-min evening journal / review'
+  ];
+
+  /* ============================================================
+     HELPERS
+  ============================================================ */
+  const $ = id => document.getElementById(id);
+  const todayKey = () => {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  };
+  const daysBetween = (a,b) => Math.floor((b - a) / 86400000);
+
+  /* ============================================================
+     RENDER AVOID LIST
+  ============================================================ */
+  (function renderAvoid(){
+    const grid = $('avoidGrid');
+    avoidItems.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'avoid-card';
+      card.innerHTML = `
+        <h3>${item.t}<span class="idx">${String(i+1).padStart(2,'0')}</span></h3>
+        <div class="label">Why it works on you</div>
+        <p>${item.why}</p>
+        <div class="label">Replace it with</div>
+        <p class="replace">${item.replace}</p>
+      `;
+      grid.appendChild(card);
+    });
+  })();
+
+  /* ============================================================
+     RENDER DAILY RULES
+  ============================================================ */
+  (function renderRules(){
+    const list = $('rulesList');
+    dailyRules.forEach((rule, i) => {
+      const li = document.createElement('li');
+      const id = 'r' + i;
+      li.innerHTML = `
+        <input type="checkbox" id="${id}">
+        <label for="${id}">${rule}</label>
+      `;
+      list.appendChild(li);
+    });
+  })();
+
+  /* ============================================================
+     DAILY RULES PERSISTENCE (date-keyed)
+  ============================================================ */
+  function loadDaily(){
+    const key = LS.daily + todayKey();
+    const saved = JSON.parse(localStorage.getItem(key) || '[]');
+    document.querySelectorAll('.rules-list input[type=checkbox]').forEach((cb, i) => {
+      cb.checked = !!saved[i];
+      cb.addEventListener('change', saveDaily);
+    });
+    updateRulesCount();
+  }
+  function saveDaily(){
+    const key = LS.daily + todayKey();
+    const arr = [];
+    document.querySelectorAll('.rules-list input[type=checkbox]').forEach(cb => arr.push(cb.checked));
+    localStorage.setItem(key, JSON.stringify(arr));
+    updateRulesCount();
+  }
+  function updateRulesCount(){
+    const boxes = document.querySelectorAll('.rules-list input[type=checkbox]');
+    const done = [...boxes].filter(b => b.checked).length;
+    $('rulesDone').textContent = done;
+    $('rulesMini').textContent = done + '/' + boxes.length;
+  }
+
+  /* ============================================================
+     COUNTDOWN
+  ============================================================ */
+  function updateCountdown(){
+    const d = EXAM_DATE - new Date();
+    $('daysLeft').textContent = d > 0 ? Math.ceil(d / 86400000) : 0;
+  }
+
+  /* ============================================================
+     STREAK LOGIC
+  ============================================================ */
+  function getStart(){
+    let s = localStorage.getItem(LS.start);
+    if (!s){
+      s = new Date().toISOString();
+      localStorage.setItem(LS.start, s);
+    }
+    return new Date(s);
+  }
+  function currentStreak(){
+    const start = getStart();
+    const days = daysBetween(start, new Date());
+    return Math.max(0, days);
+  }
+  function renderStreak(){
+    const streak = currentStreak();
+    const start = getStart();
+    const totalDays = Math.max(1, daysBetween(start, EXAM_DATE));
+    const pct = Math.min(100, Math.round((streak / totalDays) * 100));
+
+    $('streakNum').textContent = streak;
+    $('streakMini').textContent = streak;
+    $('progressPct').textContent = pct + '%';
+    $('progressFill').style.width = pct + '%';
+
+    const best = parseInt(localStorage.getItem(LS.best) || '0', 10);
+    if (streak > best) localStorage.setItem(LS.best, streak);
+    $('bestStreak').textContent = Math.max(streak, best) + ' days';
+
+    const opts = { day:'numeric', month:'short', year:'numeric' };
+    $('sinceText').textContent = 'Since ' + start.toLocaleDateString('en-IN', opts);
+  }
+
+  function resetStreak(){
+    const confirmMsg = 'Reset the streak honestly?\n\nThis is not a failure. Log what triggered it, and start today.';
+    if (!confirm(confirmMsg)) return;
+
+    const reason = prompt('One sentence — what triggered it? (optional)', '');
+    const start = new Date();
+    localStorage.setItem(LS.start, start.toISOString());
+
+    const log = JSON.parse(localStorage.getItem(LS.relapses) || '[]');
+    log.push({ date: new Date().toISOString(), reason: reason || '' });
+    localStorage.setItem(LS.relapses, JSON.stringify(log));
+
+    renderStreak();
+    alert('Streak reset. Rule 5: return to study the same day. Today, not tomorrow.');
+  }
+
+  /* ============================================================
+     CONTRACT SIGNING
+  ============================================================ */
+  function renderContract(){
+    const name = localStorage.getItem(LS.name);
+    if (name){
+      $('nameInput').value = name;
+      const stamp = $('stamp');
+      const signed = new Date(localStorage.getItem(LS.start)).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+      stamp.innerHTML = `✅ <strong>Sealed by ${name}</strong><br><span style="font-size:.85rem;color:var(--muted);">Committed ${signed} · In force until 10 January 2027</span>`;
+      stamp.classList.add('show');
+    }
+  }
+  $('signBtn').addEventListener('click', () => {
+    const name = $('nameInput').value.trim();
+    if (!name){ alert('Type your full name to sign.'); return; }
+    localStorage.setItem(LS.name, name);
+    renderContract();
+    window.scrollTo({ top: $('contract').offsetTop - 80, behavior:'smooth' });
+  });
+
+  /* ============================================================
+     SOS BREATHING MODAL
+  ============================================================ */
+  const modal   = $('sosModal');
+  const circle  = $('breathCircle');
+  const phaseEl = $('phaseText');
+  const cycleEl = $('cycleText');
+  let breathing = false;
+  let timers = [];
+
+  function clearTimers(){ timers.forEach(t => clearTimeout(t)); timers = []; }
+
+  function startBreathing(){
+    if (breathing) return;
+    breathing = true;
+    const phases = [
+      { t:'Inhale…',    scale:1.15, dur:4000 },
+      { t:'Hold…',      scale:1.15, dur:4000 },
+      { t:'Exhale…',    scale:0.70, dur:4000 },
+      { t:'Hold…',      scale:0.70, dur:4000 }
+    ];
+    let cycle = 0, totalCycles = 4;
+
+    function runCycle(){
+      if (cycle >= totalCycles){
+        phaseEl.textContent = 'Well done. The wave has passed.';
+        cycleEl.textContent = 'Now open Tamil or aptitude — redirect.';
+        circle.style.transform = 'scale(0.85)';
+        breathing = false;
+        return;
+      }
+      cycle++;
+      cycleEl.textContent = `Cycle ${cycle} of ${totalCycles}`;
+      let offset = 0;
+      phases.forEach((p, i) => {
+        timers.push(setTimeout(() => {
+          phaseEl.textContent = p.t;
+          circle.style.transitionDuration = (p.dur/1000) + 's';
+          circle.style.transform = 'scale(' + p.scale + ')';
+        }, offset));
+        offset += p.dur;
+      });
+      timers.push(setTimeout(runCycle, offset));
+    }
+    runCycle();
+  }
+
+  function stopBreathing(){
+    breathing = false;
+    clearTimers();
+    phaseEl.textContent = 'Get ready…';
+    cycleEl.textContent = '';
+    circle.style.transitionDuration = '0.4s';
+    circle.style.transform = 'scale(0.7)';
+  }
+
+  $('sosBtn').addEventListener('click', () => {
+    modal.classList.add('open');
+    stopBreathing();
+    setTimeout(startBreathing, 400);
+  });
+  $('closeModal').addEventListener('click', () => {
+    modal.classList.remove('open');
+    stopBreathing();
+  });
+  modal.addEventListener('click', e => {
+    if (e.target === modal){
+      modal.classList.remove('open');
+      stopBreathing();
+    }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('open')){
+      modal.classList.remove('open');
+      stopBreathing();
+    }
+  });
+
+  /* ============================================================
+     BOOT
+  ============================================================ */
+  function boot(){
+    renderContract();
+    loadDaily();
+    renderStreak();
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+    setInterval(renderStreak, 60000);
+    $('relapseBtn').addEventListener('click', resetStreak);
+  }
+  boot();
+</script>
+</body>
+</html>
