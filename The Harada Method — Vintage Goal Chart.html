@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Harada Method — Vintage Goal Chart</title>
+<style>
+:root{--paper:#f1e4c8;--card:#f8eed7;--ink:#3b2a1a;--soft:#7a6446;--red:#9b2d20;--gold:#b8892f;--line:#6b5233;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#241a10;--card:#2f2216;--ink:#ead9b5;--soft:#b39b72;--red:#d0604f;--gold:#d8aa52;--line:#8a6d46;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#241a10;--card:#2f2216;--ink:#ead9b5;--soft:#b39b72;--red:#d0604f;--gold:#d8aa52;--line:#8a6d46;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.55;
+background-image:radial-gradient(rgba(120,85,40,.12) 1px,transparent 1px);background-size:5px 5px}
+.wrap{max-width:980px;margin:0 auto;padding:28px 16px 60px}
+header{text-align:center;border-top:4px double var(--line);border-bottom:4px double var(--line);padding:22px 8px;margin-bottom:26px}
+.est{letter-spacing:.35em;font-size:.75rem;color:var(--red);text-transform:uppercase}
+h1{font-family:"Playfair Display","Bodoni MT",Georgia,serif;font-size:clamp(2rem,7vw,3.6rem);margin:.15em 0;letter-spacing:.04em}
+.sub{font-style:italic;color:var(--soft)}
+h2{font-size:1.3rem;text-align:center;margin:34px 0 14px;color:var(--red);letter-spacing:.12em;text-transform:uppercase}
+h2::before,h2::after{content:"❦";margin:0 .6em;color:var(--gold)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.step{background:var(--card);border:1px solid var(--line);outline:1px solid var(--line);outline-offset:-6px;padding:18px 16px;text-align:center}
+.step b{display:block;font-size:2rem;color:var(--gold);font-family:Georgia,serif}
+.step p{margin:.3em 0 0;font-size:.92rem}
+.bar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0 18px}
+button{font:inherit;background:var(--ink);color:var(--paper);border:0;padding:9px 18px;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;font-size:.78rem;border-radius:2px}
+button:hover{background:var(--red);color:#fff}
+.scroll{overflow-x:auto;padding-bottom:6px}
+#chart{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;min-width:640px;background:var(--card);border:3px double var(--line);padding:10px}
+.blk{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--line);border:1px solid var(--line)}
+textarea{width:100%;height:100%;min-height:72px;resize:none;border:0;background:var(--card);color:var(--ink);font:inherit;font-size:.74rem;text-align:center;padding:6px 3px;line-height:1.25;display:block}
+textarea:focus{outline:2px solid var(--red);outline-offset:-2px;background:var(--paper)}
+textarea.sub-c{background:color-mix(in srgb,var(--gold) 28%,var(--card));font-weight:bold}
+textarea.core{background:var(--red);color:#fff8e8;font-weight:bold;font-size:.82rem}
+textarea.core::placeholder{color:#f0d6c8}
+textarea::placeholder{color:var(--soft);opacity:.75;font-style:italic}
+.note{text-align:center;color:var(--soft);font-size:.85rem;font-style:italic;margin-top:10px}
+.tips{max-width:640px;margin:0 auto;padding-left:1.2em}
+.tips li{margin:.5em 0}
+footer{text-align:center;margin-top:44px;border-top:4px double var(--line);padding-top:16px;color:var(--soft);font-size:.82rem;letter-spacing:.1em}
+@media print{.bar,.note{display:none}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="est">Est. in Japan · Goal Mastery</div>
+  <h1>The Harada Method</h1>
+  <div class="sub">A time-honoured system for turning one great ambition into daily action</div>
+</header>
+
+<h2>The Four Pillars</h2>
+<div class="steps">
+  <div class="step"><b>I</b><p>Name one <em>core goal</em> that truly matters to you.</p></div>
+  <div class="step"><b>II</b><p>Choose <em>eight sub-goals</em> that would make it real.</p></div>
+  <div class="step"><b>III</b><p>Write <em>eight actions</em> for every sub-goal.</p></div>
+  <div class="step"><b>IV</b><p>Practise daily and <em>review</em> your progress.</p></div>
+</div>
+
+<h2>Your Open Window 64 Chart</h2>
+<div class="bar">
+  <button id="theme">Toggle Theme</button>
+  <button id="print">Print Chart</button>
+  <button id="reset">Clear All</button>
+</div>
+<div class="scroll"><div id="chart"></div></div>
+<p class="note">Write in the red centre first, then the gold sub-goals. Everything saves automatically on this device.</p>
+
+<h2>Counsel for the Journey</h2>
+<ul class="tips">
+  <li>Make actions small, concrete and measurable — “run 3 km”, not “get fitter”.</li>
+  <li>Balance skill, body, mind and character across your sub-goals.</li>
+  <li>Review your chart weekly; refine what is not working.</li>
+</ul>
+<footer>✦ SMALL STEPS · GREAT DEEDS ✦</footer>
+</div>
+
+<script>
+(function(){
+var KEY="harada-ow64",B=[0,1,2,3,5,6,7,8];
+var d={core:"",sub:Array(8).fill(""),act:[...Array(8)].map(function(){return Array(8).fill("")})};
+try{var s=localStorage.getItem(KEY);if(s)d=JSON.parse(s)}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
+var chart=document.getElementById("chart"),cells=[];
+function make(cls,ph,get,set){
+  var t=document.createElement("textarea");t.maxLength=70;t.className=cls;t.placeholder=ph;t.value=get();
+  t.addEventListener("input",function(){set(t.value);save();sync()});
+  cells.push({t:t,get:get});return t;
+}
+function sync(){cells.forEach(function(c){var v=c.get();if(c.t.value!==v)c.t.value=v})}
+for(var b=0;b<9;b++){
+  var blk=document.createElement("div");blk.className="blk";
+  var si=B.indexOf(b);
+  for(var p=0;p<9;p++){
+    (function(b,p,si){
+      var el;
+      if(b===4){
+        if(p===4)el=make("core","My core goal",function(){return d.core},function(v){d.core=v});
+        else{var i=B.indexOf(p);el=make("sub-c","Sub-goal "+(i+1),function(){return d.sub[i]},function(v){d.sub[i]=v})}
+      }else{
+        if(p===4)el=make("sub-c","Sub-goal "+(si+1),function(){return d.sub[si]},function(v){d.sub[si]=v});
+        else{var j=B.indexOf(p);el=make("","Action "+(j+1),function(){return d.act[si][j]},function(v){d.act[si][j]=v})}
+      }
+      blk.appendChild(el);
+    })(b,p,si);
+  }
+  chart.appendChild(blk);
+}
+document.getElementById("print").onclick=function(){window.print()};
+document.getElementById("reset").onclick=function(){
+  if(!confirm("Clear the entire chart?"))return;
+  d={core:"",sub:Array(8).fill(""),act:[...Array(8)].map(function(){return Array(8).fill("")})};
+  save();sync();
+};
+document.getElementById("theme").onclick=function(){
+  var r=document.documentElement,dark=r.getAttribute("data-theme")?r.getAttribute("data-theme")==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+  r.setAttribute("data-theme",dark?"light":"dark");
+};
+})();
+</script>
+</body>
+</html>
